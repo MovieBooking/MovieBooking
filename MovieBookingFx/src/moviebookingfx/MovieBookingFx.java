@@ -5,8 +5,6 @@
  */
 package moviebookingfx;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -30,13 +28,7 @@ public class MovieBookingFx extends Application {
             @Override
             public void handle(ActionEvent event) {
                 System.out.println("Hello World!");
-                 SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");  
-                  Date date = new Date();  
-                 String now = formatter.format(date);
-                 now = now.substring(0,2);
-                 int result = Integer.parseInt(now);
-                 System.out.println(result);
-                 
+ 
             }
         });
         
