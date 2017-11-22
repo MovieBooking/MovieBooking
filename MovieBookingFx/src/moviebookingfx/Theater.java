@@ -22,27 +22,44 @@ public abstract class Theater implements Serializable {
 
     @Id
     @GeneratedValue
-    @Column
     private int id;
-    @Column
     private int theater_id;
-    @Transient
-    private Screen screen;
-    @Transient
-    private Seats[][] seats;
-    @Column
-    private String time;
 
+    @OneToOne(mappedBy = "theater", cascade = CascadeType.ALL,
+            fetch = FetchType.LAZY, optional = false)
+    private Screen screen;
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<List<Seats>> seats;
+    private String time;
     private String status;
 
     Theater(Screen screen, String time, int id, String status) {
+        this.seats = new ArrayList<List<Seats>>();
         this.theater_id = id;
         this.time = time;
         this.status = status;
-        this.screen = screen;
+        this.setScreen(screen);
+
     }
 
     public abstract void init();
+    public void addSeats(List<Seats> seats){
+        for (Seats seat : seats) {
+            seat.setTheater(this);
+        }
+        this.seats.add(seats);
+        
+    }
+    public void remove(List<Seats> seats){
+        for (Seats seat : seats) {
+            seat.setTheater(this);
+        }
+        this.seats.remove(seats);
+    }
+    public void setScreen(Screen screen) {
+        this.screen = screen;
+        screen.setTheater(this);
+    }
 
     public int getId() {
         return id;
@@ -64,10 +81,6 @@ public abstract class Theater implements Serializable {
         return screen;
     }
 
-    public void setScreen(Screen screen) {
-        this.screen = screen;
-    }
-
     public int getTheater_id() {
         return theater_id;
     }
@@ -76,13 +89,14 @@ public abstract class Theater implements Serializable {
         this.theater_id = thearter_id;
     }
 
-    public Seats[][] getSeats() {
+    public List<List<Seats>> getSeats() {
         return seats;
     }
 
-    public void setSeats(Seats[][] seats) {
+    public void setSeats(List<List<Seats>> seats) {
         this.seats = seats;
     }
+
 
     public String getTime() {
         return time;
@@ -90,6 +104,11 @@ public abstract class Theater implements Serializable {
 
     public void setTime(String time) {
         this.time = time;
+    }
+
+    @Override
+    public String toString() {
+        return "Theater{" + "id=" + id + ", theater_id=" + theater_id + ", screen=" + screen.toString() + ", seats=" + seats.toString() + ", time=" + time + ", status=" + status + '}';
     }
 
 }
