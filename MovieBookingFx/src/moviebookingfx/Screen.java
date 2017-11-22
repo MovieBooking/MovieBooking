@@ -14,9 +14,9 @@ public abstract class Screen implements Serializable{
     private static final long serialVersionUID = 1L;
     
     @Id
-    private int theater_id;
-    private int price;
-    private String name;
+    public int theater_id;
+    public int price;
+    public String name;
     
     Screen(int id){
        this.theater_id=id;

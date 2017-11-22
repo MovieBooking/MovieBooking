@@ -17,14 +17,14 @@ import javax.persistence.Id;
 @Entity
 public abstract class Seats implements Serializable{
     private static final long serialVersionUID = 1L;
-    @Id
-    private long theater_id;
-    @GeneratedValue
+    @Id @GeneratedValue
     private long id;
+    private long theater_id;
     private String position;
     private int price;
     private String name;
     private Boolean isBook;
+    
     Seats(String position,long theater_id){
         this.theater_id = theater_id;
         this.position = position;

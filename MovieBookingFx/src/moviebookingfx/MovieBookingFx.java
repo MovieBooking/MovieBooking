@@ -65,13 +65,25 @@ public class MovieBookingFx extends Application {
         EntityManager em = emf.createEntityManager();
  
         // Store 1000 Point objects in the database:
-        em.getTransaction().begin();
-        Theater theater = new SmallTheater("IMAX", "11:00", 1,"SHOWING");
-          em.persist(theater);
-        em.getTransaction().commit();
-         em.close();
+//        em.getTransaction().begin();
+//          Screen temp = new ImaxScreen(1);
+//          em.persist(temp);   
+//        Theater theater = new SmallTheater(temp, "11:00", 1,"SHOWING");
+//        em.persist(theater);
+//        em.getTransaction().commit();
+//                em.getTransaction().begin();
+//        for (Seats[] seat : theater.getSeats()) {
+//            for (Seats seats : seat) {
+//                em.persist(seats);
+//            }
+//        }
+//           em.getTransaction().commit();
+            TypedQuery<Theater> query = em.createQuery("SELECT Theater FROM Theater", Theater.class);
+            List<Theater> results = query.getResultList();
+            Theater x = results.get(0);
+            System.out.println(x);
+            em.close();
         emf.close();
-
     }
     
 }

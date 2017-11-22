@@ -16,32 +16,28 @@ import javax.persistence.MappedSuperclass;
 @MappedSuperclass
 public class LargeTheater extends Theater {
 
-    public LargeTheater(String screen, String time, int id, String status) {
+    public LargeTheater(Screen screen, String time, int id, String status) {
         super(screen, time, id, status);
-        init();
     }
-
-    @Override
+   
+     @Override
     public void init() {
-        List<List<Seats>> temp = new ArrayList<List<Seats>>();
-        List<Seats> temp2 = new ArrayList<Seats>();
+        Seats temp[][] = new Seats[16][20];
         for (int i = 0; i < 5; i++) {
-            temp2.add(new DeluxeSeats("VIP-" + (i + 1), this.getId()));
+            temp[0][i] = new DeluxeSeats("VIP-" + (i + 1),this.getId());
         }
-        temp.add(temp2);
+        for (int i = 4; i < 15; i++) {
+            temp[0][i] = new DeluxeSeats("Don't Use",this.getId());
+        }
         for (int i = 1; i < 6; i++) {
-            temp2 = new ArrayList<Seats>();
             for (int j = 0; j < 20; j++) {
-                temp2.add(new HoneymoonSeats(((char) (64 + i)) + "" + (j + 1), this.getId()));
+                temp[i][j] = new HoneymoonSeats(((char) (64 + i)) + "" + (j + 1),this.getId());
             }
-            temp.add(temp2);
         }
         for (int i = 6; i < 16; i++) {
-            temp2 = new ArrayList<Seats>();
             for (int j = 0; j < 20; j++) {
-                temp2.add(new NormalSeats(((char) (64 + i)) + "" + (j + 1), this.getId()));
+                temp[i][j] = new NormalSeats(((char) (64 + i)) + "" + (j + 1),this.getId());
             }
-            temp.add(temp2);
         }
         this.setSeats(temp);
     }

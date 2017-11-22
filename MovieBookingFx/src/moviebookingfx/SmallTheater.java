@@ -16,32 +16,30 @@ import java.util.ArrayList;
 @MappedSuperclass
 public class SmallTheater extends Theater {
 
-    public SmallTheater(String screen, String time, int id, String status) {
+    public SmallTheater(Screen screen, String time, int id, String status) {
         super(screen, time, id, status);
-    
+        this.init();
     }
+
 
     @Override
     public void init() {
-        List<List<Seats>> temp = new ArrayList<List<Seats>>();
-        List<Seats> temp2 = new ArrayList<Seats>();
+        Seats temp[][] = new Seats[11][15];
         for (int i = 0; i < 4; i++) {
-            temp2.add(new DeluxeSeats("VIP-" + (i + 1), this.getId()));
+            temp[0][i] = new DeluxeSeats("VIP-" + (i + 1),this.getId());
         }
-        temp.add(temp2);
+        for (int i = 4; i < 15; i++) {
+            temp[0][i] = new DeluxeSeats("Don't Use",this.getId());
+        }
         for (int i = 1; i < 4; i++) {
-            temp2 = new ArrayList<Seats>();
             for (int j = 0; j < 15; j++) {
-                temp2.add(new HoneymoonSeats(((char) (64 + i)) + "" + (j + 1), this.getId()));
+                temp[i][j] = new HoneymoonSeats(((char) (64 + i)) + "" + (j + 1),this.getId());
             }
-            temp.add(temp2);
         }
         for (int i = 4; i < 11; i++) {
-            temp2 = new ArrayList<Seats>();
             for (int j = 0; j < 15; j++) {
-                temp2.add(new NormalSeats(((char) (64 + i)) + "" + (j + 1), this.getId()));
+                temp[i][j] = new NormalSeats(((char) (64 + i)) + "" + (j + 1),this.getId());
             }
-            temp.add(temp2);
         }
         this.setSeats(temp);
     }

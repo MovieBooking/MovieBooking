@@ -16,48 +16,40 @@ import javax.persistence.*;
  * @author terkg
  */
 @Entity
-public abstract class Theater implements Serializable{
+public abstract class Theater implements Serializable {
+
     private static final long serialVersionUID = 1L;
-    
+
     @Id
-    private int thearter_id;
-    @OneToOne
+    @GeneratedValue
+    @Column
+    private int id;
+    @Column
+    private int theater_id;
+    @Transient
     private Screen screen;
-    //@OneToMany
-    //private List<List<Seats>> seats;
+    @Transient
+    private Seats[][] seats;
+    @Column
     private String time;
-    
+
     private String status;
-    Theater(String screen,String time,int id,String status){
-        this.thearter_id = id;
-        this.screen = this.CreateScreen(screen);
+
+    Theater(Screen screen, String time, int id, String status) {
+        this.theater_id = id;
         this.time = time;
         this.status = status;
+        this.screen = screen;
     }
-    public Screen CreateScreen(String screen){
-        Screen temp;
-        if(screen.equals("IMAX"))
-            temp = new ImaxScreen(this.thearter_id);
-        else if (screen.equals("DIGITAL"))
-            temp = new DigitalScreen(this.thearter_id);
-        else if (screen.equals("4DX"))
-            temp = new FourDimentionScreen(this.thearter_id);
-        else if (screen.equals("ULTRASCREEN"))
-            temp = new UltraScreen(this.thearter_id);
-        else 
-            temp = new ThreeDimensionScreen(this.thearter_id);
-        System.out.println(screen);
-        return temp;
-        
-    }
+
     public abstract void init();
 
     public int getId() {
-        return thearter_id;
+        return id;
     }
 
     public void setId(int id) {
-        this.thearter_id = id;
+        this.id = id;
     }
 
     public String getStatus() {
@@ -67,7 +59,7 @@ public abstract class Theater implements Serializable{
     public void setStatus(String status) {
         this.status = status;
     }
-    
+
     public Screen getScreen() {
         return screen;
     }
@@ -76,25 +68,21 @@ public abstract class Theater implements Serializable{
         this.screen = screen;
     }
 
-    public int getThearter_id() {
-        return thearter_id;
+    public int getTheater_id() {
+        return theater_id;
     }
 
-    public void setThearter_id(int thearter_id) {
-        this.thearter_id = thearter_id;
+    public void setTheater_id(int thearter_id) {
+        this.theater_id = thearter_id;
     }
 
-    public int getSeats() {
-        return 0;
-        //return seats;
+    public Seats[][] getSeats() {
+        return seats;
     }
 
-    public int setSeats(List<List<Seats>> seats) {
-        return 0;
-        //this.seats = seats;
+    public void setSeats(Seats[][] seats) {
+        this.seats = seats;
     }
-
-
 
     public String getTime() {
         return time;
@@ -103,6 +91,5 @@ public abstract class Theater implements Serializable{
     public void setTime(String time) {
         this.time = time;
     }
-    
-    
+
 }
