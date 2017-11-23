@@ -25,7 +25,7 @@ public class SmallTheater extends Theater {
     public void init() {
         List<Seats> temp2 = new ArrayList<Seats>();
         for (int i = 0; i < 4; i++) {
-            temp2.add(new DeluxeSeats("VIP-" + (i + 1), this.getTheater_id()));
+            temp2.add(new DeluxeSeats("V" + (i + 1), this.getTheater_id()));
         }
         this.addSeats(temp2);
         for (int i = 1; i < 4; i++) {

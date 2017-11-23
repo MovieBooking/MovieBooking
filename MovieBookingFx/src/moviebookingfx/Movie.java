@@ -16,7 +16,7 @@ import javafx.scene.image.Image;
 public abstract class Movie implements Serializable{
     private static final long serialVersionUID = 1L;
     
-    @Id @GeneratedValue
+    @Id @GeneratedValue(strategy=GenerationType.IDENTITY)
     private long id;
     private String name;
     private int length;

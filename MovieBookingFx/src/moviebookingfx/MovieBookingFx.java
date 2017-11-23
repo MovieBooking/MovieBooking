@@ -49,20 +49,26 @@ public class MovieBookingFx extends Application {
      * @param args the command line arguments
      */
     public static void main(String[] args) throws FileNotFoundException {
-        EntityManagerFactory emf
-                = Persistence.createEntityManagerFactory("database/Movie.odb");
-        EntityManager em = emf.createEntityManager();
+        DataService _dataService = new DataService();
 //        em.getTransaction().begin();
 //        Theater theater = new SmallTheater(new ImaxScreen(1), "11:00", 1,"SHOWING");
 //            em.persist(theater);
 //            em.getTransaction().commit();
-        TypedQuery<Theater> query
-                = em.createQuery("SELECT c FROM Theater c", Theater.class);
-        List<Theater> results = query.getResultList();
-        Theater x = results.get(0);
-        System.out.println(x.toString());
-        em.close();
-        emf.close();
-    }
+        
+        _dataService.createTheater(new MediumTheater(new ImaxScreen(1), "11.00", 1, "AVALIABLE"));
+       _dataService.createTheater(new MediumTheater(_dataService.getScreen(1), "13.00", 1, "AVALIABLE"));
+        //Theater x1 = _dataService.getTheater(1);
+       // Theater
+       
+       
+       
+        //x2 = _dataService.getTheater(2);
+        //Screen y1 = _dataService.getScreen(1);
+       // System.out.println(x1.toString());
+      // System.out.println(x2.toString());
+        //System.out.println(y1.toString());
+        
 
+        _dataService.closeConnection();
+    }
 }

@@ -1,0 +1,22 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+
+/* 
+ * This file can be manually injected into your file timshow.fxml via:
+ * 
+ * <AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" styleClass="mainFxmlClass" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Timshow.TimshowPresenter">
+ *     <stylesheets>
+ *         <URL value="@timshow.css"/>
+ *     </stylesheets>
+ * </AnchorPane>
+ * 
+ * The above shown soucecode will be automatically generated if you have the
+ * options to create (and to inject) the 'optional' .css file into your 
+ * file timshow.fxml selected in the page 'Optional Files'.
+ * 
+ * Created on : Nov 23, 2017, 4:40:43 PM
+ * Author     : Better
+ */
