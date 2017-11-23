@@ -6,12 +6,16 @@
 package moviebookingfx;
 
 import Class.*;
+import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
@@ -20,6 +24,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
+import javafx.stage.Stage;
 
 /**
  * FXML Controller class
@@ -72,7 +77,7 @@ public class TimetableController implements Initializable {
 //         ArrayList<Boolean> boolean_list = new ArrayList<Boolean>();
     
     
-    private ArrayList<Theater> theat = new ArrayList<Theater>();
+    private List<Theater> theat = new ArrayList<Theater>();
 
     /**
      * Initializes the controller class.
@@ -80,23 +85,12 @@ public class TimetableController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-//        String size,Screen screen, String time, int id, String status
-     
-        Theater a1 = new Theater("Small",new Screen( "3D Screen", 1),"12.00",1,"SHOWING");
-        Theater a2 = new Theater("Small",new Screen( "3D Screen", 2),"15.00",1,"SHOWING");
-        Theater a3 = new Theater("Small",new Screen( "3D Screen", 3),"18.00",1,"SHOWING");
-        
-        Theater a4= new Theater("Medium",new Screen( "3D Screen", 4),"12.00",2,"SHOWING");
-        Theater a5 = new Theater("Meduim",new Screen( "3D Screen", 5),"15.00",2,"SHOWING");
-        Theater a6= new Theater("Large",new Screen( "3D Screen", 6),"12.00",3,"SHOWING");
-        theat.add(a1);
-        theat.add(a2);
-        theat.add(a3);
-        theat.add(a4);
-        theat.add(a5);
-        theat.add(a6);
+//      
+//     String size,Movie movie,Screen screen, String time, int id, String status)
+        DataService dataService = new DataService();
+        theat = dataService.getTheater(1);
        
-        Movie movie = new Movie("Justice Leauge", 120, "Action", "2016-11-23", "imageurl", 20);
+        Movie movie = new Movie("Justice Leauge", 120, "Action", "2016-11-23", "imageurl", 20,"ENG");
                 float X = 0;
                 float Y = 0;
             int max = 0;
@@ -122,8 +116,7 @@ public class TimetableController implements Initializable {
             Text status = new Text();
             name.setText("Name");
             name.setText("screen");
-            name.setText("Dulation");
-            name.setText("Status");
+            name.setText("Name");
             
             
             temp.setLayoutX(X);
@@ -132,8 +125,7 @@ public class TimetableController implements Initializable {
             anchor.getChildren().add(temp);
             
             
-            
-            
+          
             
             }
             
@@ -142,7 +134,30 @@ public class TimetableController implements Initializable {
                 
             }
        
-      
+      dataService.closeConnection();
     }    
-    
+    @FXML
+    public void jump() throws IOException
+    {
+          try {
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("Theater.fxml"));
+        Parent root1 = (Parent) fxmlLoader.load();
+        
+        TheaterController controller=fxmlLoader.<TheaterController>getController();
+        controller.setUser(Integer.parseInt("3"));
+        controller.setting();
+        fxmlLoader.setController(controller);
+        Stage stage = new Stage();
+        stage.setTitle("Edytuj klienta");
+        stage.setScene(new Scene(root1));
+        stage.show();
+         } catch(Exception e) {
+        e.printStackTrace();
+    }
+//        primaryStage.setScene(scene);     
+//
+//        primaryStage.show();   
+//            
+           
+    }
 }

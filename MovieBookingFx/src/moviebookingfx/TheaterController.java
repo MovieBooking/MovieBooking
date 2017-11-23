@@ -28,6 +28,8 @@ public class TheaterController implements Initializable {
     /**
      * Initializes the controller class.
      */
+    
+    
     @FXML
     private Button backbutton;
 
@@ -40,12 +42,56 @@ public class TheaterController implements Initializable {
     @FXML
     private AnchorPane ticketpane;
 
+    int user_id;
     private DataService _dataService = new DataService();
     private Theater theater;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        this.theater = _dataService.getTheater(1).get(0);
+//        
+//        System.out.println("this user= "+this.user_id);
+//      
+//        this.theater = _dataService.getTheater(1).get(0);
+//        System.out.println(theater);
+//        float positionx = 117;
+//        float positiony = 672;
+//        for (List<Seats> seat : theater.getSeats()) {
+//            for (Seats seats : seat) {
+//                if (seats.getName().equals("Deluxe Seat")) {
+//                    Button temp = new Button(seats.getPosition());
+//                    temp.setLayoutX(positionx);
+//                    temp.setLayoutY(positiony);
+//                    temp.setMinSize(100, 30);
+//                    positionx += 150;
+//                    theaterpane.getChildren().add(temp);
+//                } else {
+//                    Button temp = new Button(seats.getPosition());
+//                    temp.setLayoutX(positionx);
+//                    temp.setLayoutY(positiony);
+//                    temp.setMinSize(40, 30);
+//                    positionx += 40;
+//                    theaterpane.getChildren().add(temp);
+//                }
+//            }
+//            if (seat.get(0).getName().equals("Deluxe Seat")) {
+//                positiony = 596;
+//            } else {
+//                positiony -= 30;
+//            }
+//            positionx = 55;
+//        }
+    }
+
+    @FXML
+    public void testing(ActionEvent event) {
+        System.out.println("xxxx");
+    }
+    
+    public void setting(){
+        
+        System.out.println("this user= "+this.user_id);
+      
+        this.theater = _dataService.getTheater(user_id).get(0);
         System.out.println(theater);
         float positionx = 117;
         float positiony = 672;
@@ -75,10 +121,10 @@ public class TheaterController implements Initializable {
             positionx = 55;
         }
     }
-
-    @FXML
-    public void testing(ActionEvent event) {
-        System.out.println("xxxx");
-    }
+    public void setUser(int user_id){
+    this.user_id = user_id;
+//     System.out.println("this user= "+this.user_id);
+    
+}
 
 }

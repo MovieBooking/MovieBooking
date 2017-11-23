@@ -29,7 +29,7 @@ public class MovieBookingFx extends Application {
     public void start(Stage primaryStage) throws Exception {
         
         
-        Parent root = FXMLLoader.load(getClass().getResource("Theater.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("timetable.fxml"));
         primaryStage.setTitle("HELLO world");
         primaryStage.setScene(new Scene(root,1200,800));
         primaryStage.show();

@@ -16,7 +16,7 @@
               <content>
                 <AnchorPane fx:id="anchor" minHeight="0.0" minWidth="0.0" prefHeight="800.0" prefWidth="1200.0">
                      <children>
-                        <Pane fx:id="normalpane" prefHeight="200.0" prefWidth="1200.0">
+                        <Pane prefHeight="200.0" prefWidth="1200.0">
                            <children>
                               <Label fx:id="name" layoutX="150.0" layoutY="30.0" text="name" />
                               <Label fx:id="screen" layoutX="150.0" layoutY="70.0" prefHeight="21.0" prefWidth="50.0" text="screen" />
@@ -30,7 +30,7 @@
                               <Label fx:id="status" layoutX="150.0" layoutY="150.0" text="status" />
                               <Label fx:id="ID" layoutX="63.0" layoutY="14.0" text="ID" />
                               <Button fx:id="btn3" layoutX="564.0" layoutY="135.0" mnemonicParsing="false" text="time3" />
-                              <Button fx:id="btn1" layoutX="309.0" layoutY="135.0" mnemonicParsing="false" text="time1" />
+                              <Button fx:id="btn1" layoutX="309.0" layoutY="135.0" mnemonicParsing="false" onMouseClicked="#jump" text="time1" />
                            </children>
                         </Pane>
                      </children>
