@@ -5,6 +5,7 @@
  */
 package Class;
 
+import java.util.List;
 import javax.persistence.*;
 
 /**
@@ -21,7 +22,13 @@ public class DataService {
         this.em = emf.createEntityManager();
         System.out.println("DataBase is Connecting..");
     }
-
+    
+    public void createMovie(Movie movie) {
+        this.em.getTransaction().begin();
+        this.em.persist(movie);
+        this.em.getTransaction().commit();
+    }
+    
     public void createTheater(Theater theater) {
         this.em.getTransaction().begin();
         this.em.persist(theater);
@@ -40,9 +47,18 @@ public class DataService {
     public void transactionCommit(){
         this.em.getTransaction().commit();
     }
+    public Movie getMovie(String name,String language) {
+        String sql = "SELECT c FROM Movie c Where c.name = '"+name+"' AND c.language = +'"+language+"'";
+        TypedQuery<Movie> query =  em.createQuery(sql, Movie.class);
+        List<Movie> results = query.getResultList();    
+        return results.get(0);
+    }
     
-    public Theater getTheater(int id) {
-        return em.find(Theater.class, id);  
+    public List<Theater> getTheater(int id) {
+        String sql = "SELECT c FROM Theater c Where c.theater_id ="+id+"";
+        TypedQuery<Theater> query =  em.createQuery(sql, Theater.class);
+        List<Theater> results = query.getResultList();    
+        return results;
     }
     
     public Screen getScreen(int id){

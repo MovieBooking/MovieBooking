@@ -6,6 +6,8 @@
 package Class;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import javax.persistence.*;
 import javafx.scene.image.Image;
 
@@ -28,8 +30,12 @@ public class Movie implements Serializable {
     private int rate = 100;
     private String ratename = "General";
     private String image;
-
-    public Movie(String name, int length, String genre, String ReleaseDate, String image, int rate) {
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Theater> theater;
+    private String language;
+    public Movie(String name, int length, String genre, String ReleaseDate, String image, int rate,String language) {
+        this.language = language;
+        this.theater = new ArrayList<Theater>();
         this.name = name;
         this.length = length;
         this.genre = genre;
@@ -119,4 +125,14 @@ public class Movie implements Serializable {
         this.ratename = ratename;
     }
 
+     public void addTheater(Theater theater) {
+        theater.setMovie(this);
+        this.theater.add(theater);
+
+    }
+
+    public void removeTheater(Theater theater) {
+        this.theater.remove(theater);
+        theater.setMovie(null);
+    }
 }
