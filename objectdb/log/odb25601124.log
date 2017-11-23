@@ -247,3 +247,14 @@ New type java.lang.Object[]
 [2560-11-24 03:38:29 #7 store] 
 Database 'C:\Users\terkg\Documents\GitHub\MovieBooking\MovieBookingFx\database\Movie.odb' is closed by 8944@DESKTOP-KCNIK4J
 
+------------------------------------------------------------------------------------------------------------------------
+
+[2560-11-24 04:33:12 #1 store] 
+Database 'C:\Users\terkg\Documents\GitHub\MovieBooking\MovieBookingFx\database\Movie.odb' is opened by 11448@DESKTOP-KCNIK4J
+
+[2560-11-24 04:33:12 #2 store] 
+Configuration path: C:\Users\terkg\Documents\GitHub\MovieBooking\objectdb\objectdb.conf
+
+[2560-11-24 04:33:45 #3 store] 
+Database 'C:\Users\terkg\Documents\GitHub\MovieBooking\MovieBookingFx\database\Movie.odb' is closed by 11448@DESKTOP-KCNIK4J
+
