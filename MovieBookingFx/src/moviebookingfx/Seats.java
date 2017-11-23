@@ -6,9 +6,7 @@
 package moviebookingfx;
 
 import java.io.Serializable;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 /**
  *
@@ -17,14 +15,17 @@ import javax.persistence.Id;
 @Entity
 public abstract class Seats implements Serializable{
     private static final long serialVersionUID = 1L;
-    @Id
-    private long theater_id;
-    @GeneratedValue
+    @Id @GeneratedValue
     private long id;
+    private long theater_id;
     private String position;
     private int price;
     private String name;
     private Boolean isBook;
+    
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "seat_id")
+    private Theater theater;
     Seats(String position,long theater_id){
         this.theater_id = theater_id;
         this.position = position;
@@ -63,6 +64,35 @@ public abstract class Seats implements Serializable{
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public long getTheater_id() {
+        return theater_id;
+    }
+
+    public void setTheater_id(long theater_id) {
+        this.theater_id = theater_id;
+    }
+
+    public Theater getTheater() {
+        return theater;
+    }
+
+    public void setTheater(Theater theater) {
+        this.theater = theater;
+    }
+
+    @Override
+    public String toString() {
+        return "Seats{" + "id=" + id + ", theater_id=" + theater_id + ", position=" + position + ", price=" + price + ", name=" + name + ", isBook=" + isBook + '}';
     }
     
     
