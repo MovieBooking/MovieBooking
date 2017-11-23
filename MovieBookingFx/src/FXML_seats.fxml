@@ -162,10 +162,10 @@
             <Label layoutX="435.0" layoutY="14.0" prefHeight="21.0" prefWidth="50.0" text="screen" />
             <Label layoutX="11.0" layoutY="756.0" prefHeight="21.0" prefWidth="58.0" text="door" />
             <Label layoutX="811.0" layoutY="756.0" prefHeight="21.0" prefWidth="58.0" text="door" />
-            <Button fx:id="VIP-0" layoutX="117.0" layoutY="672.0" mnemonicParsing="false" onMouseClicked="#vipClick" prefHeight="51.0" prefWidth="115.0" text="VIP-IP 1" />
-            <Button fx:id="VIP-1" layoutX="302.0" layoutY="672.0" mnemonicParsing="false" prefHeight="51.0" prefWidth="115.0" text="VIP-IP 2" />
-            <Button fx:id="VIP-2" layoutX="485.0" layoutY="672.0" mnemonicParsing="false" prefHeight="51.0" prefWidth="115.0" text="VIP-IP 3" />
-            <Button fx:id="VIP-3" layoutX="660.0" layoutY="672.0" mnemonicParsing="false" onMouseClicked="#onClick" prefHeight="51.0" prefWidth="115.0" text="VIP-IP 4" />
+            <Button fx:id="V1" layoutX="117.0" layoutY="672.0" mnemonicParsing="false" onMouseClicked="#vipClick" prefHeight="51.0" prefWidth="115.0" text="VIP-IP 1" />
+            <Button fx:id="V2" layoutX="302.0" layoutY="672.0" mnemonicParsing="false" prefHeight="51.0" prefWidth="115.0" text="VIP-IP 2" />
+            <Button fx:id="V3" layoutX="485.0" layoutY="672.0" mnemonicParsing="false" prefHeight="51.0" prefWidth="115.0" text="VIP-IP 3" />
+            <Button fx:id="V4" layoutX="660.0" layoutY="672.0" mnemonicParsing="false" onMouseClicked="#onClick" prefHeight="51.0" prefWidth="115.0" text="VIP-IP 4" />
             <Label layoutX="29.0" layoutY="611.0" prefHeight="18.0" prefWidth="23.0" text="A" />
             <Label layoutX="27.0" layoutY="559.0" prefHeight="18.0" prefWidth="23.0" text="B" />
             <Label layoutX="29.0" layoutY="500.0" prefHeight="18.0" prefWidth="23.0" text="C" />
