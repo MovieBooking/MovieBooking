@@ -29,11 +29,14 @@ public class Theater implements Serializable {
     private Screen screen;
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     private List<List<Seats>> seats;
+     @OneToOne(mappedBy = "theater", cascade = CascadeType.ALL,
+            fetch = FetchType.EAGER, optional = false)
+    private Movie movie;
     private String time;
     private String status;
     private String size;
     
-    public Theater(String size,Screen screen, String time, int id, String status) {
+    public Theater(String size,Movie movie,Screen screen, String time, int id, String status) {
         this.seats = new ArrayList<List<Seats>>();
         this.theater_id = id;
         this.time = time;
@@ -45,7 +48,9 @@ public class Theater implements Serializable {
             this.createMediumTheater();
         else
             this.createSmallTheater();
+        movie.addTheater(this);
         screen.addTheater(this);
+        
     }
 
     public void createLargeTheater() {
@@ -188,6 +193,14 @@ public class Theater implements Serializable {
 
     public void setSize(String size) {
         this.size = size;
+    }
+
+    public Movie getMovie() {
+        return movie;
+    }
+
+    public void setMovie(Movie movie) {
+        this.movie = movie;
     }
 
 }

@@ -45,7 +45,7 @@ public class TheaterController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        this.theater = _dataService.getTheater(1);
+        this.theater = _dataService.getTheater(1).get(0);
         System.out.println(theater);
         float positionx = 117;
         float positiony = 672;
@@ -56,7 +56,7 @@ public class TheaterController implements Initializable {
                     temp.setLayoutX(positionx);
                     temp.setLayoutY(positiony);
                     temp.setMinSize(100, 30);
-                    positionx += 100;
+                    positionx += 150;
                     theaterpane.getChildren().add(temp);
                 } else {
                     Button temp = new Button(seats.getPosition());
@@ -72,7 +72,7 @@ public class TheaterController implements Initializable {
             } else {
                 positiony -= 30;
             }
-            positionx = 67;
+            positionx = 55;
         }
     }
 

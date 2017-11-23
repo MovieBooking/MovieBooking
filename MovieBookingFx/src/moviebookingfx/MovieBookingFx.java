@@ -69,10 +69,12 @@ public class MovieBookingFx extends Application {
      */
     public static void main(String[] args) {
         DataService dataService = new DataService();
-
-        //dataService.createTheater(new Theater("Small",new Screen("3D",1), "11:00", 1, "SHOWING"));
-        //dataService.createTheater(new Theater("Medium",new Screen("Ultra",2), "11:00", 2, "SHOWING"));
-        //dataService.createTheater(new Theater("Large",new Screen("Imax",3), "11:00", 3, "SHOWING"));
+//        dataService.createMovie(new Movie("Justice League", 180, "ACTION", "16 NOV 2017", "/images/justice-league-poster.jpg", 13, "EN-TH"));
+//        dataService.createMovie(new Movie("Justice League", 180, "ACTION", "16 NOV 2017", "/images/justice-league-poster.jpg", 13, "TH"));
+//        
+//        dataService.createTheater(new Theater("Small",dataService.getMovie("Justice League","TH"),new Screen("3D",1), "11:00", 1, "SHOWING"));
+//        dataService.createTheater(new Theater("Medium",dataService.getMovie("Justice League","TH"),new Screen("Ultra",2), "11:00", 2, "SHOWING"));
+//        dataService.createTheater(new Theater("Large",dataService.getMovie("Justice League","EN-TH"),new Screen("Imax",3), "11:00", 3, "SHOWING"));
         dataService.closeConnection();
         launch(args);
     }
