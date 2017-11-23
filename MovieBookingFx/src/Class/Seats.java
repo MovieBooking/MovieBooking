@@ -13,7 +13,7 @@ import javax.persistence.*;
  * @author terkg
  */
 @Entity
-public abstract class Seats implements Serializable{
+public class Seats implements Serializable{
     private static final long serialVersionUID = 1L;
     @Id @GeneratedValue(strategy=GenerationType.IDENTITY)
     private long id;
@@ -27,13 +27,14 @@ public abstract class Seats implements Serializable{
     @JoinColumn(name = "seat_id")
     private Theater theater;
     
-    Seats(String position,long theater_id){
+    public Seats(String position,long theater_id){
         this.theater_id = theater_id;
         this.position = position;
         this.isBook = false;
     }
   
-    public abstract void init();
+    public void init(){
+    };
 
     public String getPosition() {
         return position;

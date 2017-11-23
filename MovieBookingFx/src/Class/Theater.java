@@ -16,12 +16,11 @@ import javax.persistence.*;
  * @author terkg
  */
 @Entity
-public abstract class Theater implements Serializable {
-
+public class Theater implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private int theater_id;
 
@@ -32,29 +31,104 @@ public abstract class Theater implements Serializable {
     private List<List<Seats>> seats;
     private String time;
     private String status;
-
-    Theater(Screen screen, String time, int id, String status) {
+    private String size;
+    
+    public Theater(String size,Screen screen, String time, int id, String status) {
         this.seats = new ArrayList<List<Seats>>();
         this.theater_id = id;
         this.time = time;
         this.status = status;
+        this.size = size;
+        if(size.equals("Large"))
+            this.createLargeTheater();
+        else if (size.equals("Medium"))
+            this.createMediumTheater();
+        else
+            this.createSmallTheater();
         screen.addTheater(this);
     }
 
-    public abstract void init();
-    public void addSeats(List<Seats> seats){
+    public void createLargeTheater() {
+        List<Seats> temp2 = new ArrayList<Seats>();
+        for (int i = 0; i < 5; i++) {
+            temp2.add(new DeluxeSeats("V" + (i + 1), this.getTheater_id()));
+        }
+        this.addSeats(temp2);
+        for (int i = 1; i < 6; i++) {
+            temp2 = new ArrayList<Seats>();
+            for (int j = 0; j < 20; j++) {
+                temp2.add(new HoneymoonSeats(((char) (64 + i)) + "" + (j + 1), this.getTheater_id()));
+            }
+            this.addSeats(temp2);
+        }
+        for (int i = 6; i < 16; i++) {
+            temp2 = new ArrayList<Seats>();
+            for (int j = 0; j < 20; j++) {
+                temp2.add(new NormalSeats(((char) (64 + i)) + "" + (j + 1), this.getTheater_id()));
+            }
+            this.addSeats(temp2);
+        }
+    }
+
+    public void createSmallTheater() {
+        List<Seats> temp2 = new ArrayList<Seats>();
+        for (int i = 0; i < 4; i++) {
+            temp2.add(new DeluxeSeats("V" + (i + 1), this.getTheater_id()));
+        }
+        this.addSeats(temp2);
+        for (int i = 1; i < 4; i++) {
+            temp2 = new ArrayList<Seats>();
+            for (int j = 0; j < 15; j++) {
+                temp2.add(new HoneymoonSeats(((char) (64 + i)) + "" + (j + 1), this.getTheater_id()));
+            }
+            this.addSeats(temp2);
+        }
+        for (int i = 4; i < 11; i++) {
+            temp2 = new ArrayList<Seats>();
+            for (int j = 0; j < 15; j++) {
+                temp2.add(new NormalSeats(((char) (64 + i)) + "" + (j + 1), this.getTheater_id()));
+            }
+            this.addSeats(temp2);
+        }
+    }
+
+    public void createMediumTheater() {
+        List<Seats> temp2 = new ArrayList<Seats>();
+        for (int i = 0; i < 4; i++) {
+            temp2.add(new DeluxeSeats("V" + (i + 1), this.getTheater_id()));
+        }
+        this.addSeats(temp2);
+        for (int i = 1; i < 6; i++) {
+            temp2 = new ArrayList<Seats>();
+            for (int j = 0; j < 15; j++) {
+                temp2.add(new HoneymoonSeats(((char) (64 + i)) + "" + (j + 1), this.getTheater_id()));
+            }
+            this.addSeats(temp2);
+        }
+        for (int i = 6; i < 16; i++) {
+            temp2 = new ArrayList<Seats>();
+            for (int j = 0; j < 15; j++) {
+                temp2.add(new NormalSeats(((char) (64 + i)) + "" + (j + 1), this.getTheater_id()));
+            }
+            this.addSeats(temp2);
+        }
+    }
+
+    public void addSeats(List<Seats> seats) {
         for (Seats seat : seats) {
             seat.setTheater(this);
         }
         this.seats.add(seats);
-        
+
     }
-    public void remove(List<Seats> seats){
+
+    public void remove(List<Seats> seats) {
         for (Seats seat : seats) {
             seat.setTheater(this);
         }
         this.seats.remove(seats);
     }
+
     public void setScreen(Screen screen) {
         this.screen = screen;
     }
@@ -95,7 +169,6 @@ public abstract class Theater implements Serializable {
         this.seats = seats;
     }
 
-
     public String getTime() {
         return time;
     }
@@ -107,6 +180,14 @@ public abstract class Theater implements Serializable {
     @Override
     public String toString() {
         return "Theater{" + "id=" + id + ", theater_id=" + theater_id + ", screen=" + screen.toString() + ", time=" + time + ", status=" + status + '}';
+    }
+
+    public String getSize() {
+        return size;
+    }
+
+    public void setSize(String size) {
+        this.size = size;
     }
 
 }

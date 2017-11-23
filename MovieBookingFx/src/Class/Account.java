@@ -15,8 +15,10 @@ import javax.persistence.*;
  * @author Sivakorn
  */
 @Entity
-public abstract class Account {
-    @Id @GeneratedValue
+public class Account {
+
+    @Id
+    @GeneratedValue
     private long id;
     private int age;
     private String dateOfBirth;
@@ -24,6 +26,7 @@ public abstract class Account {
     private int point;
     private String firstname;
     private String lastname;
+    private String member = "Normal Member";
 
     Account(String dateOfBirth, String email, String firstname, String lastname) {
         this.dateOfBirth = dateOfBirth;
@@ -33,7 +36,20 @@ public abstract class Account {
         this.point = 0;
         this.age = findAge();
     }
-
+    
+    public void setToGoldMember(){
+        this.member = "Gold Member";
+    }
+    public void setToPatinumMember(){
+        this.member = "Patinum Member";
+    }
+    public void setToDiamonMember(){
+        this.member = "Diamon Member";
+    }
+    public void setToNormalMember(){
+        this.member = "Normal Member";
+    }
+    
     public int getAge() {
         return age;
     }
@@ -81,16 +97,11 @@ public abstract class Account {
     public void setLastname(String lastname) {
         this.lastname = lastname;
     }
-    
-    public void updateAge()
-    {
+
+    public void updateAge() {
         this.age = findAge();
     }
-    
-    public abstract int discount();
-    {
-        
-    }
+
     public int findAge() {
         SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
         Date date = new Date();
@@ -101,24 +112,24 @@ public abstract class Account {
         int age;
         int resultdayn = Integer.parseInt(dayn);
         int resultmonthn = Integer.parseInt(monthn);
-        int resultyearn = Integer.parseInt(yearn)-543;
+        int resultyearn = Integer.parseInt(yearn) - 543;
         String day = this.dateOfBirth.substring(0, 2);
         String month = this.dateOfBirth.substring(3, 5);
         String year = this.dateOfBirth.substring(6, 10);
         int resultday = Integer.parseInt(day);
         int resultmonth = Integer.parseInt(month);
         int resultyear = Integer.parseInt(year);
-        int difday = resultdayn-resultday;
-        int difmonth = resultmonthn-resultmonth;
-        int difyear = resultyearn-resultyear;
-        if(difmonth<0)
+        int difday = resultdayn - resultday;
+        int difmonth = resultmonthn - resultmonth;
+        int difyear = resultyearn - resultyear;
+        if (difmonth < 0) {
+            age = difyear - 1;
+        } else {
+            if (difday < 0) {
                 age = difyear - 1;
-        else
-        {
-            if(difday<0)
-                age = difyear -1;
-            else
+            } else {
                 age = difyear;
+            }
         }
         return age;
     }

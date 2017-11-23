@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<SplitPane dividerPositions="0.6663135593220338" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="680.0" prefWidth="946.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="moviebookingfx.TheaterController">
+  <items>
+    <AnchorPane fx:id="theaterpane" minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+         <children>
+            <Button fx:id="back" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" prefHeight="29.0" prefWidth="79.0" text="Back" />
+         </children></AnchorPane>
+      <AnchorPane prefHeight="200.0" prefWidth="200.0">
+         <children>
+            <ScrollPane layoutY="-1.0" prefHeight="560.0" prefWidth="315.0">
+              <content>
+                <AnchorPane fx:id="ticketpane" minHeight="0.0" minWidth="0.0" prefHeight="72.0" prefWidth="315.0" />
+              </content>
+            </ScrollPane>
+            <Button fx:id="buybutton" layoutX="28.0" layoutY="577.0" mnemonicParsing="false" prefHeight="71.0" prefWidth="260.0" text="BUY TICKET" textAlignment="CENTER" textOverrun="CLIP">
+               <font>
+                  <Font size="33.0" />
+               </font>
+            </Button>
+         </children>
+      </AnchorPane>
+  </items>
+</SplitPane>

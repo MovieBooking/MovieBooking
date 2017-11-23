@@ -12,7 +12,7 @@ import java.util.List;
 import javax.persistence.*;
 
 @Entity
-public abstract class Screen implements Serializable {
+public class Screen implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -24,12 +24,46 @@ public abstract class Screen implements Serializable {
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Theater> theater;
 
-    public Screen(int id) {
+    public Screen(String name, int id) {
+        if (name.equals("3D")) {
+            this.create3dscreen();
+        } else if (name.equals("Ultra")) {
+            this.createultrascreen();
+        } else if (name.equals("Imax")) {
+            this.createimaxscreen();
+        } else if (name.equals("4D")) {
+            this.crete4dxscreen();
+        } else {
+            this.createdigitalscreen();
+        }
         this.theater = new ArrayList<Theater>();
         this.theater_id = id;
     }
 
-    public abstract void init();
+    public void createdigitalscreen() {
+        this.setName("Digital Screen");
+        this.setPrice(60);
+    }
+
+    public void crete4dxscreen() {
+        this.setName("4DX Screen");
+        this.setPrice(150);
+    }
+
+    public void createimaxscreen() {
+        this.setName("Imax Screen");
+        this.setPrice(120);
+    }
+
+    public void create3dscreen() {
+        this.setName("3D Screen");
+        this.setPrice(80);
+    }
+
+    public void createultrascreen() {
+        this.setName("Ultra Screen");
+        this.setPrice(150);
+    }
 
     public int getPrice() {
         return price;

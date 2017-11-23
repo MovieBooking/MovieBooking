@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 package Class;
+
 import java.io.Serializable;
 import javax.persistence.*;
 import javafx.scene.image.Image;
@@ -13,31 +14,43 @@ import javafx.scene.image.Image;
  * @author terkg
  */
 @Entity
-public abstract class Movie implements Serializable{
+public class Movie implements Serializable {
+
     private static final long serialVersionUID = 1L;
-    
-    @Id @GeneratedValue(strategy=GenerationType.IDENTITY)
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     private String name;
     private int length;
     private String genre;
     private String ReleaseDate;
-    private String rate;
+    private int rate = 100;
+    private String ratename = "General";
     private String image;
-    
-    Movie(String name,int length,String genre,String ReleaseDate,String image){
+
+    public Movie(String name, int length, String genre, String ReleaseDate, String image, int rate) {
         this.name = name;
         this.length = length;
         this.genre = genre;
         this.ReleaseDate = ReleaseDate;
-       this.image = image;
+        this.image = image;
+        if (rate != 0) {
+            this.rate = rate;
+            this.ratename = "" + rate + "+";
+        }
     }
-    
-    public abstract void init();
-    public abstract Boolean canBook(int age);
-    
-    public Image showImage(){
-         return new Image(this.image,50,50,true,true);
+
+    public Boolean canBook(int age) {
+        if (age <= this.rate) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    public Image showImage() {
+        return new Image(this.image, 50, 50, true, true);
     }
 
     public String getImage() {
@@ -47,17 +60,17 @@ public abstract class Movie implements Serializable{
     public void setImage(String image) {
         this.image = image;
     }
-    
-    public String showLength(){
-        int Hour = this.length/60;
-        int Min = this.length%60;
-        if(Min>9)
-        return (""+ Hour +":"+ Min);
-        else
-        return (""+Hour+":0"+Min);
+
+    public String showLength() {
+        int Hour = this.length / 60;
+        int Min = this.length % 60;
+        if (Min > 9) {
+            return ("" + Hour + ":" + Min);
+        } else {
+            return ("" + Hour + ":0" + Min);
+        }
     }
 
-    
     public String getName() {
         return name;
     }
@@ -90,12 +103,20 @@ public abstract class Movie implements Serializable{
         this.ReleaseDate = ReleaseDate;
     }
 
-    public String getRate() {
+    public int getRate() {
         return rate;
     }
 
-    public void setRate(String rate) {
+    public void setRate(int rate) {
         this.rate = rate;
     }
-    
+
+    public String getRatename() {
+        return ratename;
+    }
+
+    public void setRatename(String ratename) {
+        this.ratename = ratename;
+    }
+
 }

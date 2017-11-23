@@ -7,6 +7,7 @@ package moviebookingfx;
  */
 
 
+import Class.*;
 import java.io.IOException;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
@@ -28,7 +29,7 @@ public class MovieBookingFx extends Application {
     public void start(Stage primaryStage) throws Exception {
         
         
-        Parent root = FXMLLoader.load(getClass().getResource("FXML_seats.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("Theater.fxml"));
         primaryStage.setTitle("HELLO world");
         primaryStage.setScene(new Scene(root,1200,800));
         primaryStage.show();
@@ -67,6 +68,12 @@ public class MovieBookingFx extends Application {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
+        DataService dataService = new DataService();
+
+        //dataService.createTheater(new Theater("Small",new Screen("3D",1), "11:00", 1, "SHOWING"));
+        //dataService.createTheater(new Theater("Medium",new Screen("Ultra",2), "11:00", 2, "SHOWING"));
+        //dataService.createTheater(new Theater("Large",new Screen("Imax",3), "11:00", 3, "SHOWING"));
+        dataService.closeConnection();
         launch(args);
     }
     
