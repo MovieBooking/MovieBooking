@@ -30,6 +30,8 @@ public class TheaterController implements Initializable {
     /**
      * Initializes the controller class.
      */
+    
+    
     @FXML
     private Button backbutton;
 
@@ -42,18 +44,15 @@ public class TheaterController implements Initializable {
     @FXML
     private AnchorPane ticketpane;
 
+    int user_id;
     private DataService _dataService = new DataService();
     private Theater theater;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-//        Image img = new Image("images/justice-league-poster.jpg",50,50,false,true);
-//        ImageView imgView = new ImageView(img);
-//        theaterpane.getChildren().add(imgView);
-       
+
         List<Button> temp = new ArrayList<Button>();
         this.theater = _dataService.getTheater(3).get(0);
-        
         System.out.println(theater);
         float positionx = 117;
         float positiony = 672;
@@ -124,7 +123,6 @@ public class TheaterController implements Initializable {
             positionx = 55;
         }
     }
-
     @FXML
     public void testing(ActionEvent event
     ) {
