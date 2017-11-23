@@ -15,7 +15,7 @@ import javax.persistence.*;
 @Entity
 public abstract class Seats implements Serializable{
     private static final long serialVersionUID = 1L;
-    @Id @GeneratedValue
+    @Id @GeneratedValue(strategy=GenerationType.IDENTITY)
     private long id;
     private long theater_id;
     private String position;
@@ -23,9 +23,10 @@ public abstract class Seats implements Serializable{
     private String name;
     private Boolean isBook;
     
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "seat_id")
     private Theater theater;
+    
     Seats(String position,long theater_id){
         this.theater_id = theater_id;
         this.position = position;

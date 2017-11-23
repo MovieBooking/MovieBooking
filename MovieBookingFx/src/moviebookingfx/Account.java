@@ -8,13 +8,16 @@ package moviebookingfx;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.util.Date;
+import javax.persistence.*;
 
 /**
  *
  * @author Sivakorn
  */
+@Entity
 public abstract class Account {
-
+    @Id @GeneratedValue
+    private long id;
     private int age;
     private String dateOfBirth;
     private String email;

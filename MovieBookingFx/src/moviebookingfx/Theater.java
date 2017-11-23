@@ -21,12 +21,12 @@ public abstract class Theater implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     private int id;
     private int theater_id;
 
     @OneToOne(mappedBy = "theater", cascade = CascadeType.ALL,
-            fetch = FetchType.LAZY, optional = false)
+            fetch = FetchType.EAGER, optional = false)
     private Screen screen;
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     private List<List<Seats>> seats;
@@ -38,8 +38,7 @@ public abstract class Theater implements Serializable {
         this.theater_id = id;
         this.time = time;
         this.status = status;
-        this.setScreen(screen);
-
+        screen.addTheater(this);
     }
 
     public abstract void init();
@@ -58,7 +57,6 @@ public abstract class Theater implements Serializable {
     }
     public void setScreen(Screen screen) {
         this.screen = screen;
-        screen.setTheater(this);
     }
 
     public int getId() {
@@ -108,7 +106,7 @@ public abstract class Theater implements Serializable {
 
     @Override
     public String toString() {
-        return "Theater{" + "id=" + id + ", theater_id=" + theater_id + ", screen=" + screen.toString() + ", seats=" + seats.toString() + ", time=" + time + ", status=" + status + '}';
+        return "Theater{" + "id=" + id + ", theater_id=" + theater_id + ", screen=" + screen.toString() + ", time=" + time + ", status=" + status + '}';
     }
 
 }

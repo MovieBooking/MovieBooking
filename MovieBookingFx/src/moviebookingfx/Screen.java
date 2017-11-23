@@ -6,6 +6,9 @@
 package moviebookingfx;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.persistence.*;
 
 @Entity
@@ -14,16 +17,15 @@ public abstract class Screen implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
-    
     private int theater_id;
     private int price;
     private String name;
-    
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "theater_id")
-    private Theater theater;
+
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Theater> theater;
 
     public Screen(int id) {
+        this.theater = new ArrayList<Theater>();
         this.theater_id = id;
     }
 
@@ -40,10 +42,11 @@ public abstract class Screen implements Serializable {
     public String getName() {
         return name;
     }
-    
-    public Screen getScreen(){
+
+    public Screen getScreen() {
         return this;
     }
+
     public void setName(String name) {
         this.name = name;
     }
@@ -56,17 +59,27 @@ public abstract class Screen implements Serializable {
         this.theater_id = theater_id;
     }
 
-    public Theater getTheater() {
-        return theater;
-    }
-
-    public void setTheater(Theater theater) {
-        this.theater = theater;
-    }
-
     @Override
     public String toString() {
         return "Screen{" + "theater_id=" + theater_id + ", price=" + price + ", name=" + name + '}';
     }
 
+    public List<Theater> getTheater() {
+        return theater;
+    }
+
+    public void setTheater(List<Theater> theater) {
+        this.theater = theater;
+    }
+
+    public void addTheater(Theater theater) {
+        theater.setScreen(this);
+        this.theater.add(theater);
+
+    }
+
+    public void removeTheater(Theater theater) {
+        this.theater.remove(theater);
+        theater.setScreen(null);
+    }
 }
