@@ -13,11 +13,13 @@ import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.*;
+import javafx.geometry.Insets;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.*;
 import javafx.scene.text.Font;
 
 /**
@@ -30,10 +32,11 @@ public class TheaterController implements Initializable {
     /**
      * Initializes the controller class.
      */
-    
-    
     @FXML
     private Button backbutton;
+
+    @FXML
+    private ScrollPane scrollpane;
 
     @FXML
     private Button buybutton;
@@ -43,13 +46,25 @@ public class TheaterController implements Initializable {
 
     @FXML
     private AnchorPane ticketpane;
+    
+    @FXML
+    private Label cost;
 
-    int user_id;
+    int ticket_id;
     private DataService _dataService = new DataService();
     private Theater theater;
+    private List<Pane> ticket = new ArrayList<Pane>();
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        ticket_id = 0;
+        GridPane gridpane = new GridPane();
+        gridpane.setStyle("-fx-border-color:blue;");
+        gridpane.setMinSize(229, 630);
+        gridpane.setHgap(100);
+
+        gridpane.getColumnConstraints().add(new ColumnConstraints(228));
+        scrollpane.setContent(gridpane);
 
         List<Button> temp = new ArrayList<Button>();
         this.theater = _dataService.getTheater(3).get(0);
@@ -57,7 +72,7 @@ public class TheaterController implements Initializable {
         float positionx = 117;
         float positiony = 672;
         String styleH = "-fx-background-color:blue;-fx-text-fill:white;-fx-border-color:black";
-        String styleD = "-fx-background-color:pink;-fx-text-fill:white;-fx-border-color:black";
+        String styleD = "-fx-background-color:pink;-fx-text-fill:black;-fx-border-color:black";
         String styleN = "-fx-background-color:red;-fx-text-fill:white;-fx-border-color:black";
         String stylep = "-fx-background-color:#6fff43;-fx-text-fill:white;-fx-border-color:black";
         for (List<Seats> seat : theater.getSeats()) {
@@ -87,10 +102,22 @@ public class TheaterController implements Initializable {
                                         } else {
                                             button.setStyle(styleH);
                                         }
+
+                                        for (int i = 0; i < ticket.size(); i++) {
+                                            if (ticket.get(i).getId().equals(seats.getPosition())) {
+                                                ticket_id--;
+                                                cost.setText(""+(Integer.parseInt(cost.getText())-seats.getPrice()));
+                                                gridpane.getChildren().remove(ticket.get(i));
+                                                ticket.remove(i);
+                                            }
+                                        }
                                     } else {
                                         button.setStyle(stylep);
-                                        
+                                        cost.setText(""+(Integer.parseInt(cost.getText())+seats.getPrice()));
+                                        ticket.add(createPane(theater.getMovie().getName(), seats.getPosition(), seats.getPrice(), theater.getTime(), seats.getName()));
+                                        gridpane.add(ticket.get(ticket.size() - 1), 0, ticket_id);
                                         System.out.println(seats);
+                                        ticket_id++;
                                     }
                                 }
                             }
@@ -109,13 +136,11 @@ public class TheaterController implements Initializable {
                     temp.get(temp.size() - 1).setMinSize(42, 29);
                     positionx += 42;
                 }
-
                 theaterpane.getChildren().add(temp.get(temp.size() - 1));
 
             }
 
-            if (seat.get(
-                    0).getName().equals("Deluxe Seat")) {
+            if (seat.get(0).getName().equals("Deluxe Seat")) {
                 positiony = 596;
             } else {
                 positiony -= 30;
@@ -123,8 +148,52 @@ public class TheaterController implements Initializable {
             positionx = 55;
         }
     }
+
+    public Pane createPane(String name, String position, int cost, String time, String seat) {
+        Pane pane = new Pane();
+        pane.minHeight(150);
+        pane.minWidth(229);
+        pane.setStyle("-fx-border-color:red;");
+        pane.setPadding(new Insets(8));
+        Label name_label = new Label(name);
+        name_label.setLayoutX(13);
+        name_label.setLayoutY(13);
+        Label position_label = new Label("Seat : " + position);
+        position_label.setLayoutY(26);
+        position_label.setLayoutX(50);
+        position_label.setStyle("-fx-font-size:25px;");
+        Label time_label = new Label("Time:" + time);
+        time_label.setLayoutX(150);
+        time_label.setLayoutY(13);
+        Label cost_label = new Label("Cost:" + cost);
+        cost_label.setLayoutX(150);
+        cost_label.setLayoutY(58);
+        Label seat_label = new Label(seat);
+        seat_label.setLayoutX(13);
+        seat_label.setLayoutY(58);
+        pane.getChildren().addAll(seat_label, name_label, position_label, time_label, cost_label);
+        pane.setId(position);
+        return pane;
+    }
+
     @FXML
-    public void testing(ActionEvent event
+    public void confirm(ActionEvent event
+    ) {
+        _dataService.transactionBegin();
+        for (Pane pane : ticket) {
+            for (List<Seats> seat : theater.getSeats()) {
+                for (Seats seats : seat) {
+                    if (pane.getId().equals(seats.getPosition())) {
+                        seats.setIsBook(true);
+                    }
+                }
+            }
+        }
+        _dataService.transactionCommit();
+    }
+
+    @FXML
+    public void back(ActionEvent event
     ) {
         System.out.println("xxxx");
     }
