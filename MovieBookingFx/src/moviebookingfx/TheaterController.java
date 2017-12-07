@@ -106,14 +106,14 @@ public class TheaterController implements Initializable {
                                         for (int i = 0; i < ticket.size(); i++) {
                                             if (ticket.get(i).getId().equals(seats.getPosition())) {
                                                 ticket_id--;
-                                                cost.setText(""+(Integer.parseInt(cost.getText())-seats.getPrice()));
+                                                cost.setText(""+(Integer.parseInt(cost.getText())-seats.getPrice()-theater.getScreen().getPrice()));
                                                 gridpane.getChildren().remove(ticket.get(i));
                                                 ticket.remove(i);
                                             }
                                         }
                                     } else {
                                         button.setStyle(stylep);
-                                        cost.setText(""+(Integer.parseInt(cost.getText())+seats.getPrice()));
+                                        cost.setText(""+(Integer.parseInt(cost.getText())+seats.getPrice()+theater.getScreen().getPrice()));
                                         ticket.add(createPane(theater.getMovie().getName(), seats.getPosition(), seats.getPrice(), theater.getTime(), seats.getName()));
                                         gridpane.add(ticket.get(ticket.size() - 1), 0, ticket_id);
                                         System.out.println(seats);
@@ -150,6 +150,7 @@ public class TheaterController implements Initializable {
     }
 
     public Pane createPane(String name, String position, int cost, String time, String seat) {
+        cost += theater.getScreen().getPrice();
         Pane pane = new Pane();
         pane.minHeight(150);
         pane.minWidth(229);

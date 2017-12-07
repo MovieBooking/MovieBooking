@@ -42,7 +42,7 @@ public class Screen implements Serializable {
 
     public void createdigitalscreen() {
         this.setName("Digital Screen");
-        this.setPrice(60);
+        this.setPrice(40);
     }
 
     public void crete4dxscreen() {
@@ -52,17 +52,17 @@ public class Screen implements Serializable {
 
     public void createimaxscreen() {
         this.setName("Imax Screen");
-        this.setPrice(120);
+        this.setPrice(80);
     }
 
     public void create3dscreen() {
         this.setName("3D Screen");
-        this.setPrice(80);
+        this.setPrice(50);
     }
 
     public void createultrascreen() {
         this.setName("Ultra Screen");
-        this.setPrice(150);
+        this.setPrice(100);
     }
 
     public int getPrice() {
