@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane id="AnchorPane" fx:id="backpane" prefHeight="800.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="moviebookingfx.TimetableController">
+   <children>
+      <ScrollPane fx:id="scrollpane" prefHeight="800.0" prefWidth="1200.0">
+        <content>
+          <AnchorPane fx:id="anchor_scroll" minHeight="0.0" minWidth="0.0" prefHeight="798.0" prefWidth="1201.0">
+               <children>
+                  <Button fx:id="btn1" mnemonicParsing="false" onMouseClicked="#jump" text="time1" />
+               </children>
+            </AnchorPane>
+        </content>
+      </ScrollPane>
+   </children>
+</AnchorPane>

@@ -47,6 +47,14 @@ public class Movie implements Serializable {
         }
     }
 
+    public String getLanguage() {
+        return language;
+    }
+
+    public void setLanguage(String language) {
+        this.language = language;
+    }
+
     public Boolean canBook(int age) {
         if (age <= this.rate) {
             return false;
