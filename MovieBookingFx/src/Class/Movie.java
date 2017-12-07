@@ -138,4 +138,22 @@ public class Movie implements Serializable {
         this.theater.remove(theater);
         theater.setMovie(null);
     }
+
+    public List<Theater> getTheater() {
+        return theater;
+    }
+
+    public void setTheater(List<Theater> theater) {
+        this.theater = theater;
+    }
+
+    public String getLanguage() {
+        return language;
+    }
+
+    public void setLanguage(String language) {
+        this.language = language;
+    }
+    
+    
 }
