@@ -45,6 +45,9 @@ public class Movie implements Serializable {
             this.rate = rate;
             this.ratename = "" + rate + "+";
         }
+        else{
+            this.ratename = "G";
+        }
     }
 
     public String getLanguage() {
