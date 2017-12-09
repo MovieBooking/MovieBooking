@@ -47,6 +47,12 @@ public class DataService {
     public void transactionCommit(){
         this.em.getTransaction().commit();
     }
+    public List<Movie> getAllMovie(){
+        String sql = "SELECT c FROM Movie c";
+        TypedQuery<Movie> query =  em.createQuery(sql, Movie.class);
+        List<Movie> results = query.getResultList();    
+        return results;
+    }
     public Movie getMovie(String name,String language) {
         String sql = "SELECT c FROM Movie c Where c.name = '"+name+"' AND c.language = +'"+language+"'";
         TypedQuery<Movie> query =  em.createQuery(sql, Movie.class);

@@ -139,7 +139,6 @@ public class Movie implements Serializable {
      public void addTheater(Theater theater) {
         theater.setMovie(this);
         this.theater.add(theater);
-
     }
 
     public void removeTheater(Theater theater) {
@@ -155,13 +154,6 @@ public class Movie implements Serializable {
         this.theater = theater;
     }
 
-    public String getLanguage() {
-        return language;
-    }
-
-    public void setLanguage(String language) {
-        this.language = language;
-    }
     
     
 }
