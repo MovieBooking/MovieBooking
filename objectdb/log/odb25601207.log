@@ -61,3 +61,14 @@ New type com.objectdb.o.RFV
 [2560-12-07 18:16:14 #6 store] 
 Database 'C:\Users\terkg\Documents\GitHub\MovieBooking\MovieBookingFx\database\Movie.odb' is closed by 5164@DESKTOP-KCNIK4J
 
+------------------------------------------------------------------------------------------------------------------------
+
+[2560-12-07 21:15:04 #1 store] 
+Database 'C:\Users\terkg\Documents\GitHub\MovieBooking\MovieBookingFx\database\Movie.odb' is opened by 5516@DESKTOP-KCNIK4J
+
+[2560-12-07 21:15:04 #2 store] 
+Configuration path: C:\Users\terkg\Documents\GitHub\MovieBooking\objectdb\objectdb.conf
+
+[2560-12-07 21:29:13 #3 store] 
+Database 'C:\Users\terkg\Documents\GitHub\MovieBooking\MovieBookingFx\database\Movie.odb' is closed by 5516@DESKTOP-KCNIK4J
+
