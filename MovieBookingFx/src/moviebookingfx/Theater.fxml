@@ -8,11 +8,11 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<SplitPane dividerPositions="0.662771285475793" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="moviebookingfx.TheaterController">
+<SplitPane fx:id="Splitpane" dividerPositions="0.662771285475793" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="moviebookingfx.TheaterController">
    <items>
       <AnchorPane fx:id="theaterpane" focusTraversable="true" maxWidth="940.0" minHeight="0.0" minWidth="0.0" prefHeight="798.0" prefWidth="885.0">
          <children>
-            <Button fx:id="back" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#back" prefHeight="29.0" prefWidth="79.0" style="-fx-font-fill: white;" text="Back" />
+            <Button fx:id="back" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#back" onMouseClicked="#back" prefHeight="29.0" prefWidth="79.0" style="-fx-font-fill: white;" text="Back" />
          </children>
       </AnchorPane>
       <AnchorPane maxHeight="798.0" maxWidth="258.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="798.0" prefWidth="258.0">

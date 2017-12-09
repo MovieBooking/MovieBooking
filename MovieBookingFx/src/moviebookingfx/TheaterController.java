@@ -6,6 +6,7 @@
 package moviebookingfx;
 
 import Class.*;
+import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -14,6 +15,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.*;
 import javafx.geometry.Insets;
+import javafx.scene.Parent;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -33,6 +35,9 @@ public class TheaterController implements Initializable {
      * Initializes the controller class.
      */
     @FXML
+    private SplitPane Splitpane;
+    
+    @FXML
     private Button backbutton;
 
     @FXML
@@ -49,7 +54,8 @@ public class TheaterController implements Initializable {
     
     @FXML
     private Label cost;
-
+    
+    int theater_id;
     int ticket_id;
     private DataService _dataService = new DataService();
     private Theater theater;
@@ -57,17 +63,90 @@ public class TheaterController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        
+    }
+
+    public Pane createPane(String name, String position, int cost, String time, String seat) {
+        cost += theater.getScreen().getPrice();
+        Pane pane = new Pane();
+        pane.minHeight(150);
+        pane.minWidth(229);
+        pane.setStyle("-fx-border-color:red;");
+        pane.setPadding(new Insets(8));
+        Label name_label = new Label(name);
+        name_label.setLayoutX(13);
+        name_label.setLayoutY(13);
+        Label position_label = new Label("Seat : " + position);
+        position_label.setLayoutY(26);
+        position_label.setLayoutX(50);
+        position_label.setStyle("-fx-font-size:25px;");
+        Label time_label = new Label("Time:" + time);
+        time_label.setLayoutX(150);
+        time_label.setLayoutY(13);
+        Label cost_label = new Label("Cost:" + cost);
+        cost_label.setLayoutX(150);
+        cost_label.setLayoutY(58);
+        Label seat_label = new Label(seat);
+        seat_label.setLayoutX(13);
+        seat_label.setLayoutY(58);
+        pane.getChildren().addAll(seat_label, name_label, position_label, time_label, cost_label);
+        pane.setId(position);
+        return pane;
+    }
+
+    @FXML
+    public void confirm(ActionEvent event) {
+        _dataService.transactionBegin();
+        for (Pane pane : ticket) {
+            for (List<Seats> seat : theater.getSeats()) {
+                for (Seats seats : seat) {
+                    if (pane.getId().equals(seats.getPosition())) {
+                        seats.setIsBook(true);
+                    }
+                }
+            }
+        }
+        _dataService.transactionCommit();
+    }
+
+    @FXML
+    public void back(ActionEvent event) throws IOException{
+        
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("Timetable.fxml"));
+        Parent root = (Parent) fxmlLoader.load(); 
+        Splitpane.getItems().setAll(root);
+        
+        
+        
+        System.out.println("xxxx");
+    }
+    
+    @FXML
+    public void setTheaterID(int theater_id,int theater_index)
+    {
+//        this.theater_id = theater_id;
+        System.out.println("here is theter theater_id (receive) = "+theater_id);
+        System.out.println("here is theter theater_index (receive) = "+theater_index);
+        
         ticket_id = 0;
+        
+        
+        
         GridPane gridpane = new GridPane();
         gridpane.setStyle("-fx-border-color:blue;");
         gridpane.setMinSize(229, 630);
         gridpane.setHgap(100);
-
         gridpane.getColumnConstraints().add(new ColumnConstraints(228));
         scrollpane.setContent(gridpane);
 
         List<Button> temp = new ArrayList<Button>();
-        this.theater = _dataService.getTheater(3).get(0);
+        this.theater = _dataService.getTheater(theater_id).get(theater_index);
+        
+        Label label = new Label(String.format("THEATER: %d\nMOVIE : %s\nTIME: %s\n",theater_id ,theater.getMovie().getName(),theater.getTime() ));
+        label.setLayoutX(200);
+        label.setLayoutY(20);
+        theaterpane.getChildren().add(label);
+       
         System.out.println(theater);
         float positionx = 117;
         float positiony = 672;
@@ -147,56 +226,6 @@ public class TheaterController implements Initializable {
             }
             positionx = 55;
         }
-    }
-
-    public Pane createPane(String name, String position, int cost, String time, String seat) {
-        cost += theater.getScreen().getPrice();
-        Pane pane = new Pane();
-        pane.minHeight(150);
-        pane.minWidth(229);
-        pane.setStyle("-fx-border-color:red;");
-        pane.setPadding(new Insets(8));
-        Label name_label = new Label(name);
-        name_label.setLayoutX(13);
-        name_label.setLayoutY(13);
-        Label position_label = new Label("Seat : " + position);
-        position_label.setLayoutY(26);
-        position_label.setLayoutX(50);
-        position_label.setStyle("-fx-font-size:25px;");
-        Label time_label = new Label("Time:" + time);
-        time_label.setLayoutX(150);
-        time_label.setLayoutY(13);
-        Label cost_label = new Label("Cost:" + cost);
-        cost_label.setLayoutX(150);
-        cost_label.setLayoutY(58);
-        Label seat_label = new Label(seat);
-        seat_label.setLayoutX(13);
-        seat_label.setLayoutY(58);
-        pane.getChildren().addAll(seat_label, name_label, position_label, time_label, cost_label);
-        pane.setId(position);
-        return pane;
-    }
-
-    @FXML
-    public void confirm(ActionEvent event
-    ) {
-        _dataService.transactionBegin();
-        for (Pane pane : ticket) {
-            for (List<Seats> seat : theater.getSeats()) {
-                for (Seats seats : seat) {
-                    if (pane.getId().equals(seats.getPosition())) {
-                        seats.setIsBook(true);
-                    }
-                }
-            }
-        }
-        _dataService.transactionCommit();
-    }
-
-    @FXML
-    public void back(ActionEvent event
-    ) {
-        System.out.println("xxxx");
     }
 
 }
