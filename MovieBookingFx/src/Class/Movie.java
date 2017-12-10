@@ -30,7 +30,7 @@ public class Movie implements Serializable {
     private int rate = 100;
     private String ratename = "General";
     private String image;
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = false)
     private List<Theater> theater;
     private String language;
     public Movie(String name, int length, String genre, String ReleaseDate, String image, int rate,String language) {
@@ -142,6 +142,7 @@ public class Movie implements Serializable {
     }
 
     public void removeTheater(Theater theater) {
+        
         this.theater.remove(theater);
         theater.setMovie(null);
     }

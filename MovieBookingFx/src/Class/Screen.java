@@ -21,7 +21,7 @@ public class Screen implements Serializable {
     private int price;
     private String name;
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = false)
     private List<Theater> theater;
 
     public Screen(String name, int id) {
@@ -32,7 +32,7 @@ public class Screen implements Serializable {
         } else if (name.equals("Imax")) {
             this.createimaxscreen();
         } else if (name.equals("4D")) {
-            this.crete4dxscreen();
+            this.create4dxscreen();
         } else {
             this.createdigitalscreen();
         }
@@ -45,7 +45,7 @@ public class Screen implements Serializable {
         this.setPrice(40);
     }
 
-    public void crete4dxscreen() {
+    public void create4dxscreen() {
         this.setName("4DX Screen");
         this.setPrice(150);
     }
@@ -116,4 +116,6 @@ public class Screen implements Serializable {
         this.theater.remove(theater);
         theater.setScreen(null);
     }
+    
+    
 }

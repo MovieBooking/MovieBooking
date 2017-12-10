@@ -27,7 +27,7 @@ public class MovieBookingFx extends Application {
     public void start(Stage primaryStage) throws Exception {
 
 
-        Parent root = FXMLLoader.load(getClass().getResource("Timetable.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("ManageMovie.fxml"));
 
 
         primaryStage.setTitle("HELLO world");
@@ -67,6 +67,7 @@ public class MovieBookingFx extends Application {
      */
     public static void main(String[] args) {
         DataService dataService = new DataService();
+        
 //        dataService.createMovie(new Movie("Justice League", 180, "ACTION", "16 NOV 2017", "/images/justice-league-poster.jpg", 13, "EN-TH"));
 //        dataService.createMovie(new Movie("Justice League", 180, "ACTION", "16 NOV 2017", "/images/justice-league-poster.jpg", 13, "TH"));
 //        dataService.createMovie(new Movie("Beyond Skyline", 105, "ACTION/THRILLER", "21 NOV 2017", "/images/beyond-Skyline-poster.jpg", 15, "EN-TH"));

@@ -32,13 +32,28 @@ import javafx.scene.layout.*;
 public class ManageMovieControlller implements Initializable {
 
     @FXML
+    private ScrollPane scrollpane;
+
+    @FXML
     private AnchorPane showingpane;
 
     @FXML
     private AnchorPane manage;
 
     @FXML
-    private ScrollPane scrollpane;
+    private ComboBox movieselector;
+
+    @FXML
+    private Label header;
+
+    @FXML
+    private ComboBox screenselector;
+
+    @FXML
+    private ComboBox sizeselect;
+
+    @FXML
+    private ScrollPane timepane;
 
     private List<Pane> cinema = new ArrayList<Pane>();
     private DataService _dataService = new DataService();
@@ -49,18 +64,7 @@ public class ManageMovieControlller implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-        movie = _dataService.getAllMovie();
-        GridPane gridpane = new GridPane();
-        gridpane.setStyle("-fx-border-color:blue;");
-        gridpane.setMinSize(229, 630);
-        gridpane.setHgap(100);
-        gridpane.getColumnConstraints().add(new ColumnConstraints(600));
-        scrollpane.setContent(gridpane);
-        for (int i = 1; i < 11; i++) {
-            theater.add(_dataService.getTheater(i));
-            cinema.add(createPane(theater.get(i - 1)));
-            gridpane.add(cinema.get(cinema.size() - 1), 0, i - 1);
-        }
+        update(0);
 
     }
 
@@ -90,7 +94,7 @@ public class ManageMovieControlller implements Initializable {
         btn.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                settingplan(theater.get(0).getTheater_id()-1);
+                settingplan(theater.get(0).getTheater_id() - 1);
             }
         });
         btn.setLayoutX(475);
@@ -101,17 +105,208 @@ public class ManageMovieControlller implements Initializable {
     }
 
     public void settingplan(int theater_id) {
-        ComboBox movieselector = new ComboBox();
+        header.setText("THEATER : " + theater.get(theater_id).get(0).getTheater_id());
+        movieselector.getItems().clear();
+        screenselector.getItems().clear();
+        sizeselect.getItems().clear();
         for (Movie movie1 : movie) {
-             movieselector.getItems().add((movie1.getName()+"("+movie1.getLanguage()+")"));
-//             if(movie1.equals(theater.get(theater_id).get(0).getMovie()))
-//                 movieselector.getSelectionModel().select();
+            movieselector.getItems().add(movie1.getName() + "(" + movie1.getLanguage() + ")");
+            movieselector.setPromptText(theater.get(theater_id).get(0).getMovie().getName() + "(" + theater.get(theater_id).get(0).getMovie().getLanguage() + ")");
         }
-        
-        movieselector.setLayoutX(20);
-        movieselector.setLayoutY(20);
-        Label m_label = new Label();
-        m_label.setText("ChoseMovie");
-        manage.getChildren().add(movieselector);
+        screenselector.getItems().addAll("Digital Screen", "4DX Screen", "Imax Screen", "3D Screen", "Ultra Screen");
+        screenselector.setPromptText(theater.get(theater_id).get(0).getScreen().getName());
+        sizeselect.getItems().addAll("Small", "Medium", "Large");
+        sizeselect.setPromptText(theater.get(theater_id).get(0).getSize());
+        createtimepane(theater_id);
+        //timepane.getChildren().add(manage)
+    }
+
+    public void createtimepane(int theater_id) {
+        GridPane timegrid = new GridPane();
+        timegrid.setMinSize(450, 250);
+        timegrid.setHgap(100);
+        timegrid.getColumnConstraints().add(new ColumnConstraints(450));
+        List<TextField> inputtime = new ArrayList<TextField>();
+        Button newtimebtn = new Button("NEW TIME");
+
+        //cost += theater.getScreen().getPrice();
+        for (Theater theater1 : theater.get(theater_id)) {
+            Pane pane = new Pane();
+            pane.setPadding(new Insets(2));
+            pane.minHeight(50);
+            pane.minWidth(50);
+            pane.setStyle("-fx-border-color:red;");
+            Label label = new Label("TIME " + (inputtime.size() + 1) + " : ");
+            label.setLayoutX(13);
+            label.setLayoutY(13);
+            TextField text = new TextField(theater1.getTime());
+            text.setLayoutX(60);
+            text.setLayoutY(10);
+
+            inputtime.add(text);
+            pane.getChildren().addAll(label, text);
+            timegrid.add(pane, 0, inputtime.size() - 1);
+
+        }
+        newtimebtn.setLayoutX(400);
+        newtimebtn.setLayoutY(400);
+        newtimebtn.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                Pane pane = new Pane();
+                pane.setPadding(new Insets(2));
+                pane.minHeight(50);
+                pane.minWidth(50);
+                pane.setStyle("-fx-border-color:red;");
+                Label label = new Label("TIME " + (inputtime.size() + 1) + " : ");
+                label.setLayoutX(13);
+                label.setLayoutY(13);
+                TextField text = new TextField("");
+                text.setLayoutX(60);
+                text.setLayoutY(10);
+                inputtime.add(text);
+                pane.getChildren().addAll(label, text);
+                timegrid.add(pane, 0, inputtime.size() - 1);
+            }
+        });
+        Button removebtn = new Button("REMOVE");
+        removebtn.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                timegrid.getChildren().remove(inputtime.size() - 1);
+                inputtime.remove(inputtime.size() - 1);
+            }
+        });
+        removebtn.setLayoutX(320);
+        removebtn.setLayoutY(400);
+
+        Button cancelbtn = new Button("CANCEL");
+
+        cancelbtn.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                settingplan(theater_id);
+            }
+        });
+        cancelbtn.setLayoutX(444);
+        cancelbtn.setLayoutY(750);
+
+        //return timegrid;
+        Button confirm = new Button("CONFIRM");
+        confirm.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                _dataService.transactionBegin();
+                Movie mtemp;
+                if (movieselector.getValue() != null) {
+                    mtemp = getmovie("" + movieselector.getValue());
+                } else {
+                    mtemp = theater.get(theater_id).get(0).getMovie();
+                }
+                String stemp;
+                if (sizeselect.getValue() != null) {
+                    stemp = sizeselect.getValue() + "";
+                } else {
+                    stemp = theater.get(theater_id).get(0).getSize();
+                }
+                if (screenselector.getValue() != null) {
+                    if ((screenselector.getValue() + "").equals("Digital Screen")) {
+                        theater.get(theater_id).get(0).getScreen().createdigitalscreen();
+                    } else if ((screenselector.getValue() + "").equals("4DX Screen")) {
+                        theater.get(theater_id).get(0).getScreen().create4dxscreen();
+                    } else if ((screenselector.getValue() + "").equals("Imax Screen")) {
+                        theater.get(theater_id).get(0).getScreen().createimaxscreen();;
+                    } else if ((screenselector.getValue() + "").equals("3D Screen")) {
+                        theater.get(theater_id).get(0).getScreen().create3dscreen();
+                    } else {
+                        theater.get(theater_id).get(0).getScreen().createultrascreen();
+                    }
+                }
+                _dataService.transactionCommit();
+                _dataService.transactionBegin();
+                for (int i = theater.get(theater_id).size() - 1; i >= inputtime.size(); i--) {
+                    if (i != 0) {
+                        //_dataService.transactionBegin();
+                        theater.get(theater_id).get(0).getScreen().removeTheater(theater.get(theater_id).get(i));
+                        theater.get(theater_id).get(0).getMovie().removeTheater(theater.get(theater_id).get(i));
+                        // theater.get(theater_id).get(i).getScreen().removeTheater(theater.get(theater_id).get(i));
+                        //_dataService.transactionCommit();
+                        for (List<Seats> seat : theater.get(theater_id).get(i).getSeats()) {
+                            for (Seats seats : seat) {
+                                _dataService.getEm().remove(seats);
+                            }
+                        }
+
+                        _dataService.remove(theater.get(theater_id).get(i).getId());
+                    }
+                }
+                //_dataService.transactionBegin();
+                _dataService.transactionCommit();
+                _dataService.transactionBegin();
+                for (int i = 0; i < inputtime.size(); i++) {
+                    if (i < theater.get(theater_id).size()) {
+                        if (movieselector.getValue() != null) {
+                            theater.get(theater_id).get(i).getMovie().removeTheater(theater.get(theater_id).get(i));
+                            mtemp.addTheater(theater.get(theater_id).get(i));
+                        }
+                        if (sizeselect.getValue() != null && !((sizeselect.getValue() + "").equals(theater.get(theater_id).get(i).getSize()))) {
+                            
+                            theater.get(theater_id).get(i).setSize(sizeselect.getValue() + "");
+                            for (List<Seats> seat : theater.get(theater_id).get(i).getSeats()) {
+                                for (Seats seats : seat) {
+                                    _dataService.getEm().remove(seats);
+                                }
+                            }
+                            if ((sizeselect.getValue() + "").equals("Large")) {
+                                theater.get(theater_id).get(i).createLargeTheater();
+                            } else if ((sizeselect.getValue() + "").equals("Medium")) {
+                                theater.get(theater_id).get(i).createMediumTheater();
+                            } else {
+                                theater.get(theater_id).get(i).createSmallTheater();
+                            }
+                        }
+                        theater.get(theater_id).get(i).setTime(inputtime.get(i).getText());
+
+                    } else {
+                        Theater newtheater = new Theater(stemp, mtemp, _dataService.getScreen(theater_id + 1), inputtime.get(i).getText(), theater_id + 1, "SHOWING");
+                        
+                    }
+                }
+                _dataService.transactionCommit();
+                update(theater_id);
+            }
+        });
+        confirm.setLayoutX(515);
+        confirm.setLayoutY(750);
+        manage.getChildren().addAll(newtimebtn, removebtn, cancelbtn, confirm);
+        timepane.setContent(timegrid);
+
+    }
+
+    public Movie getmovie(String temp) {
+        for (Movie movie1 : movie) {
+            if ((movie1.getName() + "(" + movie1.getLanguage() + ")").equals(temp)) {
+                return movie1;
+            }
+        }
+        return movie.get(0);
+    }
+
+    public void update(int initial) {
+        theater.clear();
+        movie = _dataService.getAllMovie();
+        GridPane gridpane = new GridPane();
+        gridpane.setStyle("-fx-border-color:blue;");
+        gridpane.setMinSize(229, 630);
+        gridpane.setHgap(100);
+        gridpane.getColumnConstraints().add(new ColumnConstraints(600));
+        scrollpane.setContent(gridpane);
+        for (int i = 1; i < 11; i++) {
+            theater.add(_dataService.getTheater(i));
+            cinema.add(createPane(theater.get(i - 1)));
+            gridpane.add(cinema.get(cinema.size() - 1), 0, i - 1);
+        }
+        settingplan(initial);
+        //_dataService.closeConnection();
     }
 }

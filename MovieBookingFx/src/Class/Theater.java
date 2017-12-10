@@ -129,11 +129,20 @@ public class Theater implements Serializable {
 
     public void remove(List<Seats> seats) {
         for (Seats seat : seats) {
-            seat.setTheater(this);
+            seats.remove(seat);
+            seat.setTheater(null);
         }
-        this.seats.remove(seats);
+         
     }
-
+    
+    public void removeAll(){
+        for (List<Seats> seat : seats) {
+            System.out.println("a");
+           seats.remove(seat);
+        }
+        
+    }
+    
     public void setScreen(Screen screen) {
         this.screen = screen;
     }
