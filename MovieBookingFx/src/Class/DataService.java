@@ -20,7 +20,7 @@ public class DataService {
     public DataService() {
         this.emf = Persistence.createEntityManagerFactory("database/Movie.odb");
         this.em = emf.createEntityManager();
-        System.out.println("DataBase is Connecting..");
+        //System.out.println("DataBase is Connecting..");
     }
 
     public void remove(int id) {

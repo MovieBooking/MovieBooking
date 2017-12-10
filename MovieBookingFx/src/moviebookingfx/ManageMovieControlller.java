@@ -56,7 +56,7 @@ public class ManageMovieControlller implements Initializable {
     private ScrollPane timepane;
 
     private List<Pane> cinema = new ArrayList<Pane>();
-    private DataService _dataService = new DataService();
+    private DataService _dataService;
     private List<List<Theater>> theater = new ArrayList<List<Theater>>();
     private List<Pane> ticket = new ArrayList<Pane>();
     private List<Movie> movie = new ArrayList<Movie>();
@@ -294,6 +294,7 @@ public class ManageMovieControlller implements Initializable {
 
     public void update(int initial) {
         theater.clear();
+        _dataService = new DataService();
         movie = _dataService.getAllMovie();
         GridPane gridpane = new GridPane();
         gridpane.setStyle("-fx-border-color:blue;");
