@@ -510,4 +510,7 @@ public class ManageMovieControlller implements Initializable {
             }
         }
     }
+    public void back(){
+        
+    }
 }

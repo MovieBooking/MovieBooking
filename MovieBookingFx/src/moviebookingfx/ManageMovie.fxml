@@ -37,6 +37,7 @@
                      </content>
                   </ScrollPane>
                   <Button layoutX="46.0" layoutY="400.0" mnemonicParsing="false" onAction="#enddayclear" prefWidth="228.0" text="Set all seats for all theaters to free" />
+                  <Button layoutX="545.0" layoutY="22.0" mnemonicParsing="false" onAction="#back" text="BACK" />
                </children>
             </AnchorPane>
             <AnchorPane fx:id="moviemange" layoutY="447.0" prefHeight="353.0" prefWidth="600.0">
