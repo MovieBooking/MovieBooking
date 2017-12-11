@@ -157,7 +157,7 @@ public class ManageAccountController implements Initializable {
         } else {
             account.setToDiamonMember();
         }
-        _dataService.creatAccount(account);
+        _dataService.createAccount(account);
         update();
     }
 }

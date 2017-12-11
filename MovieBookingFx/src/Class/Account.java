@@ -115,4 +115,14 @@ public class Account {
         this.lastname = lastname;
     }
 
+    public int getDiscount(){
+        if(this.member.equals("Normal Member"))
+            return 0;
+        else if(this.member.equals("Gold Member"))
+            return 5;
+        else if(this.member.equals("Patinum Member"))
+            return 7;
+        else 
+            return 8;
+    }
 }

@@ -45,7 +45,13 @@ public class DataService {
     public void setEm(EntityManager em) {
         this.em = em;
     }
-    public void creatAccount(Account account){
+    
+    public void createPromotion(Promotion promotion){
+        this.em.getTransaction().begin();
+        this.em.persist(promotion);
+        this.em.getTransaction().commit();
+    }
+    public void createAccount(Account account){
         this.em.getTransaction().begin();
         this.em.persist(account);
         this.em.getTransaction().commit();
