@@ -24,7 +24,7 @@ public class Report implements Serializable{
     private String theater;
     private String account;
     private String promotion;
-    private float cost=0;
+    private String cost;
     private String time;
     private String report="";
     public Report(Theater theater,List<Seats> seats,Account account,String cost,Promotion promotion){
@@ -33,12 +33,65 @@ public class Report implements Serializable{
         this.theater = "THEATER : "+theater.getTheater_id();
         this.account = "ACCOUNT : "+account.getEmail();
         this.promotion = "PROMOTION : "+promotion.getName()+" : "+promotion.getCode();
+        this.cost = cost;
         for (Seats seat : seats) {
             report.concat(String.format("Seat : %20s Cost :%20s \n", seat.getName(),""+(seat.getPrice()+theater.getScreen().getPrice())));
-            this.cost += theater.getScreen().getPrice()+seat.getPrice();
         }
-        this.cost=this.cost*(100+promotion.getDiscount()+account.getDiscount());
-        
-        report.concat(String.format("Total %f",cost));
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public String getTheater() {
+        return theater;
+    }
+
+    public void setTheater(String theater) {
+        this.theater = theater;
+    }
+
+    public String getAccount() {
+        return account;
+    }
+
+    public void setAccount(String account) {
+        this.account = account;
+    }
+
+    public String getPromotion() {
+        return promotion;
+    }
+
+    public void setPromotion(String promotion) {
+        this.promotion = promotion;
+    }
+
+    public String getCost() {
+        return cost;
+    }
+
+    public void setCost(String cost) {
+        this.cost = cost;
+    }
+
+    public String getTime() {
+        return time;
+    }
+
+    public void setTime(String time) {
+        this.time = time;
+    }
+
+    public String getReport() {
+        return report;
+    }
+
+    public void setReport(String report) {
+        this.report = report;
     }
 }
