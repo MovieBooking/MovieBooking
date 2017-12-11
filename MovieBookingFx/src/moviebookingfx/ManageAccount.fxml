@@ -47,8 +47,7 @@
             </ScrollPane>
             <TextField fx:id="searchfield" layoutX="92.0" layoutY="95.0" />
             <Label layoutX="34.0" layoutY="99.0" text="SEARCH" />
-            <Button fx:id="confirm" layoutX="741.0" layoutY="736.0" mnemonicParsing="false" text="CONFIRM" />
-            <Button fx:id="search" layoutX="261.0" layoutY="95.0" mnemonicParsing="false" text="SEARCH" />
+            <Button fx:id="search" layoutX="261.0" layoutY="95.0" mnemonicParsing="false" onAction="#search" text="SEARCH" />
          </children></AnchorPane>
   </items>
 </SplitPane>

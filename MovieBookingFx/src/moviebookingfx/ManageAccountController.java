@@ -12,7 +12,6 @@ import java.util.List;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.geometry.Point2D;
 import javafx.scene.control.*;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
@@ -94,15 +93,17 @@ public class ManageAccountController implements Initializable {
         temppane.add(createPane("E-MAIL", "PHONE NUMBER", "FIRSTNAME", "LASTNAME", "DATEOFBIRTH", "POINT", "MEMBER"));
         gridpane.add(temppane.get(temppane.size() - 1), 0, index++);
         for (Account account1 : account) {
-            temppane.add(createPane(account1.getEmail(), account1.getPhonenumber(), account1.getFirstname(), account1.getLastname(), account1.getDateOfBirth(), String.valueOf(account1.getPoint()), account1.getMember()));
-            gridpane.add(temppane.get(temppane.size() - 1), 0, index++);
+            if (searchfield.getText().equals("") ||account1.getEmail().contains( searchfield.getText()) || account1.getFirstname().contains(searchfield.getText()) || account1.getLastname().contains(searchfield.getText()) || account1.getPhonenumber().contains(searchfield.getText()) || account1.getMember().contains(searchfield.getText())) {
+                temppane.add(createPane(account1.getEmail(), account1.getPhonenumber(), account1.getFirstname(), account1.getLastname(), account1.getDateOfBirth(), String.valueOf(account1.getPoint()), account1.getMember()));
+                gridpane.add(temppane.get(temppane.size() - 1), 0, index++);
+            }
         }
 
     }
 
     public Pane createPane(String email, String phonenumber, String firstname, String lastname, String dateOfBirth, String point, String member) {
         Pane pane = new Pane();
-        pane.setMinSize(588,12);
+        pane.setMinSize(588, 12);
         Label email_text = new Label(email);
         email_text.setStyle("-fx-border-color:black");
         email_text.setMinWidth(188);
@@ -141,16 +142,21 @@ public class ManageAccountController implements Initializable {
         return pane;
     }
 
+    public void search() {
+        update();
+    }
+
     public void addMember() {
         Account account = new Account(dateofbirth.getText(), email.getText(), firstname.getText(), lastname.getText(), phonenumber.getText());
-        if(memberselector.getValue().equals("Normal Member"))
+        if (memberselector.getValue().equals("Normal Member")) {
             account.setToNormalMember();
-        else if(memberselector.getValue().equals("Gold Member"))
+        } else if (memberselector.getValue().equals("Gold Member")) {
             account.setToGoldMember();
-        else if(memberselector.getValue().equals("Patinum Member"))
+        } else if (memberselector.getValue().equals("Patinum Member")) {
             account.setToPatinumMember();
-        else
+        } else {
             account.setToDiamonMember();
+        }
         _dataService.creatAccount(account);
         update();
     }
