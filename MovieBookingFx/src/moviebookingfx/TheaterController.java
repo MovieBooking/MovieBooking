@@ -148,7 +148,7 @@ public class TheaterController implements Initializable {
         theaterpane.getChildren().add(label);
        
         System.out.println(theater);
-        float positionx = 117;
+        float positionx = 10;
         float positiony = 672;
         String styleH = "-fx-background-color:blue;-fx-text-fill:white;-fx-border-color:black";
         String styleD = "-fx-background-color:pink;-fx-text-fill:black;-fx-border-color:black";
@@ -157,7 +157,7 @@ public class TheaterController implements Initializable {
         for (List<Seats> seat : theater.getSeats()) {
             for (Seats seats : seat) {
                 temp.add(new Button(seats.getPosition()));
-                if (seats.getIsBook() == true) {
+                if (seats.getIsBook() == true) {    
                     temp.get(temp.size() - 1).setStyle("-fx-background-color:gray;-fx-text-fill:black;-fx-border-color:black");
                 } else {
 
@@ -199,6 +199,7 @@ public class TheaterController implements Initializable {
                                         ticket_id++;
                                     }
                                 }
+                               
                             }
                         }
                     }
@@ -209,14 +210,15 @@ public class TheaterController implements Initializable {
                 temp.get(temp.size() - 1).setLayoutX(positionx);
                 temp.get(temp.size() - 1).setLayoutY(positiony);
                 if (seats.getName().equals("Deluxe Seat")) {
-                    temp.get(temp.size() - 1).setMinSize(100, 30);
+                    temp.get(temp.size() - 1).setMinSize(100, 30);      
                     positionx += 150;
                 } else {
-                    temp.get(temp.size() - 1).setMinSize(42, 29);
-                    positionx += 42;
+                    temp.get(temp.size() - 1).setMinSize(51, 30);                
+                    positionx += 45;
                 }
+               
                 theaterpane.getChildren().add(temp.get(temp.size() - 1));
-
+                 
             }
 
             if (seat.get(0).getName().equals("Deluxe Seat")) {
@@ -224,7 +226,7 @@ public class TheaterController implements Initializable {
             } else {
                 positiony -= 30;
             }
-            positionx = 55;
+            positionx = 10;
         }
     }
 
