@@ -778,7 +778,7 @@ public class ManageMovieControlller implements Initializable {
         for (List<Theater> list : theater) {
 
             for (Theater theater1 : list) {
-
+                theater1.setStatus("SHOWING");
                 for (List<Seats> seat : theater1.getSeats()) {
 
                     for (Seats seats : seat) {

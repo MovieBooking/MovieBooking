@@ -45,7 +45,11 @@ public class DataService {
     public void setEm(EntityManager em) {
         this.em = em;
     }
-
+    public void creatAccount(Account account){
+        this.em.getTransaction().begin();
+        this.em.persist(account);
+        this.em.getTransaction().commit();
+    }
     public void createMovie(Movie movie) {
         this.em.getTransaction().begin();
         this.em.persist(movie);
@@ -75,6 +79,13 @@ public class DataService {
         String sql = "SELECT c FROM Movie c";
         TypedQuery<Movie> query = em.createQuery(sql, Movie.class);
         List<Movie> results = query.getResultList();
+        return results;
+    }
+
+    public List<Account> getAllAccount() {
+        String sql = "SELECT c FROM Account c";
+        TypedQuery<Account> query = em.createQuery(sql, Account.class);
+        List<Account> results = query.getResultList();
         return results;
     }
 
