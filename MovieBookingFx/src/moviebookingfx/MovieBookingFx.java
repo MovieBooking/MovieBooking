@@ -28,7 +28,7 @@ public class MovieBookingFx extends Application {
 
 
 
-        Parent root = FXMLLoader.load(getClass().getResource("Timetable.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("ManageMovie.fxml"));
 
 
 

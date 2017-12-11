@@ -373,11 +373,6 @@ public class TimetableController implements Initializable {
 
         backpane.getChildren().setAll(root);
 
-//        
-//        Stage stage = new Stage();
-//        stage.setTitle("theater");
-//        stage.setScene(new Scene(root));
-//        stage.show();
 //            
     }
 }

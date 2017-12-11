@@ -1,75 +1,153 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+
+
+<?import javafx.scene.control.Button?>
+
+<?import javafx.scene.control.ComboBox?>
+
+<?import javafx.scene.control.Label?>
+
 <?import javafx.scene.control.ScrollPane?>
+
 <?import javafx.scene.control.SplitPane?>
+
 <?import javafx.scene.control.TextField?>
+
 <?import javafx.scene.layout.AnchorPane?>
 
-<SplitPane dividerPositions="0.4966832504145937" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="moviebookingfx.ManageMovieControlller">
+<?import javafx.scene.text.Font?>
+
+
+
+<SplitPane dividerPositions="0.4966832504145937" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="moviebookingfx.ManageMovieControlller">
+
   <items>
+
       <ScrollPane fx:id="scrollpane" maxHeight="800.0" maxWidth="600.0" minHeight="800.0" minWidth="600.0" prefHeight="200.0" prefWidth="200.0">
+
          <content>
+
           <AnchorPane fx:id="showingpane" maxHeight="800.0" maxWidth="600.0" minHeight="800.0" minWidth="600.0" prefHeight="800.0" prefWidth="584.0" />
+
          </content>
+
       </ScrollPane>
+
     <AnchorPane maxHeight="800.0" maxWidth="600.0" minHeight="800.0" minWidth="600.0" prefHeight="800.0" prefWidth="504.0">
+
          <children>
 
-            <AnchorPane fx:id="select" minHeight="800.0" minWidth="600.0" prefHeight="800.0" prefWidth="592.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
             <AnchorPane fx:id="manage" minHeight="442.0" minWidth="600.0" prefHeight="442.0" prefWidth="600.0" AnchorPane.bottomAnchor="358.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+
                <children>
+
                   <ComboBox fx:id="movieselector" layoutX="148.0" layoutY="108.0" prefWidth="150.0" />
+
                   <Label layoutX="46.0" layoutY="112.0" text="MOVIE" />
+
                   <Label fx:id="header" layoutX="191.0" layoutY="22.0" prefHeight="73.0" prefWidth="189.0" textAlignment="CENTER">
+
                      <font>
+
                         <Font size="33.0" />
+
                      </font>
+
                   </Label>
+
                   <Label layoutX="46.0" layoutY="156.0" text="SCREEN" />
+
                   <Label layoutX="46.0" layoutY="202.0" text="THEATER SIZE" />
+
                   <ComboBox fx:id="screenselector" layoutX="148.0" layoutY="152.0" prefWidth="150.0" />
+
                   <ComboBox fx:id="sizeselect" layoutX="148.0" layoutY="198.0" prefWidth="150.0" />
+
                   <ScrollPane fx:id="timepane" layoutX="48.0" layoutY="247.0" prefHeight="134.0" prefWidth="452.0">
+
                      <content>
+
                         <AnchorPane prefHeight="131.0" prefWidth="450.0" />
+
                      </content>
+
                   </ScrollPane>
+
                   <Button layoutX="46.0" layoutY="400.0" mnemonicParsing="false" onAction="#enddayclear" prefWidth="228.0" text="Set all seats for all theaters to free" />
+
                   <Button layoutX="545.0" layoutY="22.0" mnemonicParsing="false" onAction="#back" text="BACK" />
+
                </children>
+
             </AnchorPane>
+
             <AnchorPane fx:id="moviemange" layoutY="447.0" prefHeight="353.0" prefWidth="600.0">
+
                <children>
+
                   <Label layoutX="128.0" layoutY="24.0" prefHeight="50.0" prefWidth="344.0" text="MOVIE MANAGEMENT">
+
                      <font>
+
                         <Font size="33.0" />
+
                      </font>
+
                   </Label>
+
                   <ComboBox fx:id="movieselector1" layoutX="176.0" layoutY="74.0" prefWidth="150.0" promptText="New Movie" />
+
                   <Label layoutX="53.0" layoutY="78.0" text="MOVIE" />
+
                   <Label layoutX="51.0" layoutY="143.0" text="LENGHTH (MINUTE)" />
+
                   <Label layoutX="51.0" layoutY="111.0" text="MOVIE NAME " />
+
                   <Label layoutX="51.0" layoutY="175.0" text="RELEASEDATE" />
+
                   <Label layoutX="53.0" layoutY="204.0" text="IMAGE" />
+
                   <Label layoutX="51.0" layoutY="234.0" text="LANGUAGE" />
+
                   <Label layoutX="51.0" layoutY="265.0" text="RATE" />
+
                   <TextField fx:id="moviename" layoutX="177.0" layoutY="107.0" />
+
                   <TextField fx:id="lenghth" layoutX="177.0" layoutY="138.0" />
+
                   <TextField fx:id="releasedate" layoutX="177.0" layoutY="171.0" />
+
                   <TextField fx:id="image" layoutX="177.0" layoutY="200.0" />
+
                   <TextField fx:id="language" layoutX="177.0" layoutY="230.0" />
+
                   <TextField fx:id="ratename" layoutX="177.0" layoutY="261.0" />
+
                   <Label layoutX="350.0" layoutY="204.0" text="(ex./images/justiice-league-poster.jpg)" />
+
                   <Button fx:id="mconfirmbtn" layoutX="511.0" layoutY="295.0" mnemonicParsing="false" onAction="#movieconfirm" text="CONFIRM" />
+
                   <Button fx:id="mcancelbtn" layoutX="428.0" layoutY="295.0" mnemonicParsing="false" onAction="#moviecancel" text="CANCEL" />
+
                   <Label layoutX="51.0" layoutY="299.0" text="GENRE" />
+
                   <TextField fx:id="genre" layoutX="177.0" layoutY="295.0" />
+
                   <Label layoutX="350.0" layoutY="175.0" text="(ex.7 DEC 2017)" />
+
                   <Label layoutX="350.0" layoutY="142.0" text="(ex.1,2,3,4)" />
+
                   <Label layoutX="350.0" layoutY="234.0" text="(ex.G,10,13,20)" />
+
                </children>
+
             </AnchorPane>
+
          </children>
+
       </AnchorPane>
+
   </items>
+
 </SplitPane>
