@@ -6,12 +6,22 @@
 
 <AnchorPane id="AnchorPane" fx:id="backpane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="moviebookingfx.MenuController">
    <children>
-      <Button fx:id="Booking" layoutX="455.0" layoutY="209.0" mnemonicParsing="false" onMouseClicked="#jumpTimetable" style="-fx-background-color: #000000;" text="Booking" textAlignment="CENTER" textFill="WHITE">
+      <Button fx:id="booking" layoutX="70.0" layoutY="296.0" mnemonicParsing="false" onMouseClicked="#jumpTimetable" prefHeight="125.0" prefWidth="506.0" style="-fx-background-color: #000000;" text="Booking" textAlignment="CENTER" textFill="WHITE">
          <font>
             <Font size="58.0" />
          </font>
       </Button>
-      <Button fx:id="Manage_Theater" layoutX="352.0" layoutY="446.0" mnemonicParsing="false" onMouseClicked="#jumpManage" style="-fx-background-color: #000000;" text="Manage Theater" textFill="WHITE">
+      <Button fx:id="show_report" layoutX="631.0" layoutY="296.0" mnemonicParsing="false" prefHeight="125.0" prefWidth="513.0" style="-fx-background-color: #000000;" text="Show report" textFill="WHITE">
+         <font>
+            <Font size="58.0" />
+         </font>
+      </Button>
+      <Button fx:id="manage_Theater" layoutX="70.0" layoutY="518.0" mnemonicParsing="false" onMouseClicked="#jumpManageTheater" prefHeight="125.0" prefWidth="506.0" style="-fx-background-color: #000000;" text="Manage Theater" textFill="WHITE">
+         <font>
+            <Font size="58.0" />
+         </font>
+      </Button>
+      <Button fx:id="manage_Account" layoutX="644.0" layoutY="518.0" mnemonicParsing="false" onMouseClicked="#jumpManageAccount" style="-fx-background-color: #000000;" text="Manage Account" textFill="WHITE">
          <font>
             <Font size="58.0" />
          </font>

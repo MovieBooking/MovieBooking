@@ -6,13 +6,17 @@
 package moviebookingfx;
 
 import Class.*;
+import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
 import javafx.scene.control.*;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
@@ -26,6 +30,9 @@ public class ManageAccountController implements Initializable {
     /**
      * Initializes the controller class.
      */
+    @FXML
+    private AnchorPane backpane;
+
     @FXML
     private TextField email;
 
@@ -74,31 +81,30 @@ public class ManageAccountController implements Initializable {
         update();
     }
 
-    public void update() {
-        int index = 0;
-        memberselector.getSelectionModel().selectFirst();
-        dateofbirth.setText("");
-        email.setText("");
-        firstname.setText("");
-        lastname.setText("");
-        phonenumber.setText("");
-        GridPane gridpane = new GridPane();
-        gridpane.setStyle("-fx-border-color:black;");
-        gridpane.setMinSize(762, 588);
-        //gridpane.setHgap(100);
-        gridpane.getColumnConstraints().add(new ColumnConstraints(50));
-        scrollpane.setContent(gridpane);
-        account = _dataService.getAllAccount();
-
-        temppane.add(createPane("E-MAIL", "PHONE NUMBER", "FIRSTNAME", "LASTNAME", "DATEOFBIRTH", "POINT", "MEMBER"));
-        gridpane.add(temppane.get(temppane.size() - 1), 0, index++);
-        for (Account account1 : account) {
-            if (searchfield.getText().equals("") ||account1.getEmail().contains( searchfield.getText()) || account1.getFirstname().contains(searchfield.getText()) || account1.getLastname().contains(searchfield.getText()) || account1.getPhonenumber().contains(searchfield.getText()) || account1.getMember().contains(searchfield.getText())) {
-                temppane.add(createPane(account1.getEmail(), account1.getPhonenumber(), account1.getFirstname(), account1.getLastname(), account1.getDateOfBirth(), String.valueOf(account1.getPoint()), account1.getMember()));
-                gridpane.add(temppane.get(temppane.size() - 1), 0, index++);
-            }
+    public void addMember() {
+        Account account = new Account(dateofbirth.getText(), email.getText(), firstname.getText(), lastname.getText(), phonenumber.getText());
+        if (memberselector.getValue().equals("Normal Member")) {
+            account.setToNormalMember();
+        } else if (memberselector.getValue().equals("Gold Member")) {
+            account.setToGoldMember();
+        } else if (memberselector.getValue().equals("Patinum Member")) {
+            account.setToPatinumMember();
+        } else {
+            account.setToDiamonMember();
         }
+        _dataService.createAccount(account);
+        update();
+    }
 
+    public void back() throws IOException {
+
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("Menu.fxml"));
+        Parent root = (Parent) fxmlLoader.load();
+
+        MenuController controller = fxmlLoader.<MenuController>getController();
+        fxmlLoader.setController(controller);
+
+        backpane.getChildren().setAll(root);
     }
 
     public Pane createPane(String email, String phonenumber, String firstname, String lastname, String dateOfBirth, String point, String member) {
@@ -146,18 +152,31 @@ public class ManageAccountController implements Initializable {
         update();
     }
 
-    public void addMember() {
-        Account account = new Account(dateofbirth.getText(), email.getText(), firstname.getText(), lastname.getText(), phonenumber.getText());
-        if (memberselector.getValue().equals("Normal Member")) {
-            account.setToNormalMember();
-        } else if (memberselector.getValue().equals("Gold Member")) {
-            account.setToGoldMember();
-        } else if (memberselector.getValue().equals("Patinum Member")) {
-            account.setToPatinumMember();
-        } else {
-            account.setToDiamonMember();
+    public void update() {
+        int index = 0;
+        memberselector.getSelectionModel().selectFirst();
+        dateofbirth.setText("");
+        email.setText("");
+        firstname.setText("");
+        lastname.setText("");
+        phonenumber.setText("");
+        GridPane gridpane = new GridPane();
+        gridpane.setStyle("-fx-border-color:black;");
+        gridpane.setMinSize(762, 588);
+        //gridpane.setHgap(100);
+        gridpane.getColumnConstraints().add(new ColumnConstraints(50));
+        scrollpane.setContent(gridpane);
+        account = _dataService.getAllAccount();
+
+        temppane.add(createPane("E-MAIL", "PHONE NUMBER", "FIRSTNAME", "LASTNAME", "DATEOFBIRTH", "POINT", "MEMBER"));
+        gridpane.add(temppane.get(temppane.size() - 1), 0, index++);
+        for (Account account1 : account) {
+            if (searchfield.getText().equals("") || account1.getEmail().contains(searchfield.getText()) || account1.getFirstname().contains(searchfield.getText()) || account1.getLastname().contains(searchfield.getText()) || account1.getPhonenumber().contains(searchfield.getText()) || account1.getMember().contains(searchfield.getText())) {
+                temppane.add(createPane(account1.getEmail(), account1.getPhonenumber(), account1.getFirstname(), account1.getLastname(), account1.getDateOfBirth(), String.valueOf(account1.getPoint()), account1.getMember()));
+                gridpane.add(temppane.get(temppane.size() - 1), 0, index++);
+            }
         }
-        _dataService.createAccount(account);
-        update();
+
     }
+
 }

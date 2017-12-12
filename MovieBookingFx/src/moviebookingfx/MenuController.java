@@ -30,50 +30,24 @@ public class MenuController implements Initializable {
      * Initializes the controller class.
      */
     @FXML
-    private Button Booking;
+    private Button booking;
 
     @FXML
-    private Button Manage_Theater;
+    private Button manage_Theater;
 
     @FXML
     private AnchorPane backpane;
 
+    @FXML
+    private Button show_report;
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-
-        Booking.setOnMouseClicked(new EventHandler<MouseEvent>() {
-
-            @Override
-            public void handle(MouseEvent event) {
-
-//                 jump to another class
-                try {
-                    jumpTimetable();
-                } catch (IOException ex) {
-                    Logger.getLogger(TimetableController.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
-
-        });
-        Manage_Theater.setOnMouseClicked(new EventHandler<MouseEvent>() {
-
-            @Override
-            public void handle(MouseEvent event) {
-
-//                 jump to another class
-                try {
-                    jumpManage();
-                } catch (IOException ex) {
-                    Logger.getLogger(TimetableController.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
-
-        });
     }
 
    @FXML
-    public void jumpManage() throws IOException {
+    public void jumpManageTheater() throws IOException {
          FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("ManageMovie.fxml"));
         Parent root = (Parent) fxmlLoader.load();
 
@@ -93,17 +67,20 @@ public class MenuController implements Initializable {
         Parent root = (Parent) fxmlLoader.load();
 
         TimetableController controller = fxmlLoader.<TimetableController>getController();
-//        controller.setTheaterID(Integer.parseInt(id));
-//        controller.setting();
         fxmlLoader.setController(controller);
 
         backpane.getChildren().setAll(root);
+          
+    }
+    
+     @FXML
+     public void jumpManageAccount() throws IOException {
+         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("ManageAccount.fxml"));
+        Parent root = (Parent) fxmlLoader.load();
+        ManageAccountController controller = fxmlLoader.<ManageAccountController>getController();
+        fxmlLoader.setController(controller);
 
-//        
-//        Stage stage = new Stage();
-//        stage.setTitle("theater");
-//        stage.setScene(new Scene(root));
-//        stage.show();
+        backpane.getChildren().setAll(root);
 //            
     }
   

@@ -47,33 +47,11 @@ public class TheaterController implements Initializable {
     
     @FXML
     private AnchorPane theaterpane;
-    
-    @FXML
-    private Button back;
-    
-    @FXML
-    private DialogPane dialog;
-    
-    @FXML
-    private TextField phonenumber;
-    
-    @FXML
-    private TextField promotion;
-    
-    @FXML
-    private Label totalcost;
-    
-    @FXML
-    private Label discount;
-    
-    @FXML
-    private Button buybutton;
-    
+      
     @FXML
     private ScrollPane scrollpane;
     
-    @FXML
-    private AnchorPane ticketpane;
+
     
     @FXML
     private Label cost;
@@ -90,61 +68,38 @@ public class TheaterController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         
     }
+       @FXML
+    public void back(ActionEvent event) throws IOException {
+        
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("Timetable.fxml"));
+        Parent root = (Parent) fxmlLoader.load();
+        Splitpane.getItems().setAll(root);     
+    } 
     
-    public Pane createPane(String name, String position, int cost, String time, String seat) {
-        cost += theater.getScreen().getPrice();
-        Pane pane = new Pane();
-        pane.minHeight(150);
-        pane.minWidth(229);
-        pane.setStyle("-fx-border-color:red;");
-        pane.setPadding(new Insets(8));
-        Label name_label = new Label(name);
-        name_label.setLayoutX(13);
-        name_label.setLayoutY(13);
-        Label position_label = new Label("Seat : " + position);
-        position_label.setLayoutY(26);
-        position_label.setLayoutX(50);
-        position_label.setStyle("-fx-font-size:25px;");
-        Label time_label = new Label("Time:" + time);
-        time_label.setLayoutX(150);
-        time_label.setLayoutY(13);
-        Label cost_label = new Label("Cost:" + cost);
-        cost_label.setLayoutX(150);
-        cost_label.setLayoutY(58);
-        Label seat_label = new Label(seat);
-        seat_label.setLayoutX(13);
-        seat_label.setLayoutY(58);
-        pane.getChildren().addAll(seat_label, name_label, position_label, time_label, cost_label);
-        pane.setId(position);
-        return pane;
-    }
-    
-    @FXML
+       @FXML
     public void confirm(ActionEvent event) {
         Dialog<Pair<String, String>> dialog = new Dialog<>();
         dialog.setTitle("PAYMENT");
-        dialog.setHeaderText("Input your Accout and Promotion.");
-        
+        dialog.setHeaderText("Input your Accout and Promotion.");           
         ButtonType submitButtonType = new ButtonType("Submit", ButtonData.OK_DONE);
-        dialog.getDialogPane().getButtonTypes().addAll(submitButtonType, ButtonType.CANCEL);
+        dialog.getDialogPane().getButtonTypes().addAll(submitButtonType, ButtonType.CANCEL); 
         
         GridPane grid = new GridPane();
         grid.setHgap(10);
         grid.setVgap(10);
-        grid.setPadding(new Insets(20, 150, 10, 10));
+        grid.setPadding(new Insets(20, 150, 10, 10));    
         
         TextField account = new TextField();
         account.setPromptText("E-mail");
         TextField promotion_code = new TextField();
-        promotion_code.setPromptText("Promotion Code");
         
+        promotion_code.setPromptText("Promotion Code");      
         grid.add(new Label("E-mail :"), 0, 0);
         grid.add(account, 1, 0);
         grid.add(new Label("Promotion :"), 0, 1);
-        grid.add(promotion_code, 1, 1);
-        
+        grid.add(promotion_code, 1, 1);       
         Node submitButton = dialog.getDialogPane().lookupButton(submitButtonType);
-        submitButton.setDisable(true);
+        submitButton.setDisable(true);     
         
         account.textProperty().addListener((observable, oldValue, newValue) -> {
             submitButton.setDisable(newValue.trim().isEmpty());
@@ -175,8 +130,7 @@ public class TheaterController implements Initializable {
                             check = true;
                             break;
                         }
-                    }
-                    
+                    }                    
                 }
             }
             if (check != true) {
@@ -185,7 +139,10 @@ public class TheaterController implements Initializable {
         });
     }
     
+    
+    
     public void confirmagain() {
+        
         Dialog<Pair<String, String>> dialog = new Dialog<>();
         dialog.setTitle("PAYMENT");
         dialog.setHeaderText("Wrong E-mail OR Promotion-Code");
@@ -240,17 +197,49 @@ public class TheaterController implements Initializable {
                             check = true;
                             break;
                         }
-                    }
-                    
+                    }                
                 }
             }
             if (check != true) {
                 confirmagain();
-            }
-            
+            }         
         });
     }
     
+    public Pane createPane(String name, String position, int cost, String time, String seat) {
+        cost += theater.getScreen().getPrice();
+        Pane pane = new Pane();
+        pane.minHeight(150);
+        pane.minWidth(229);
+        pane.setStyle("-fx-border-color:red;");
+        pane.setPadding(new Insets(8));
+        
+        Label name_label = new Label(name);
+        name_label.setLayoutX(13);
+        name_label.setLayoutY(13);
+        
+        Label position_label = new Label("Seat : " + position);
+        position_label.setLayoutY(26);
+        position_label.setLayoutX(50);
+        position_label.setStyle("-fx-font-size:25px;");
+        
+        Label time_label = new Label("Time:" + time);
+        time_label.setLayoutX(150);
+        time_label.setLayoutY(13);
+        
+        Label cost_label = new Label("Cost:" + cost);
+        cost_label.setLayoutX(150);
+        cost_label.setLayoutY(58);
+        
+        Label seat_label = new Label(seat);
+        seat_label.setLayoutX(13);
+        seat_label.setLayoutY(58);
+        
+        pane.getChildren().addAll(seat_label, name_label, position_label, time_label, cost_label);
+        pane.setId(position);
+        return pane;
+    }
+
     public void nextDialog(String email, String code) throws IOException {
         Alert alert = new Alert(AlertType.CONFIRMATION);
         alert.setTitle("Confirm your payment.");
@@ -300,22 +289,12 @@ public class TheaterController implements Initializable {
             }
         }
         _dataService.transactionCommit();
-    }
-    
-    @FXML
-    public void back(ActionEvent event) throws IOException {
-        
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("Timetable.fxml"));
-        Parent root = (Parent) fxmlLoader.load();
-        Splitpane.getItems().setAll(root);
-        
-    }
+    } 
     
     @FXML
     public void setTheaterID(int theater_id, int theater_index) {
         this.theater_id = theater_id;
         this.theater_index = theater_index;
-
         ticket_id = 0;
         
         GridPane gridpane = new GridPane();
@@ -382,8 +361,7 @@ public class TheaterController implements Initializable {
                                         gridpane.add(ticket.get(ticket.size() - 1), 0, ticket_id);
                                         ticket_id++;
                                     }
-                                }
-                                
+                                }                              
                             }
                         }
                     }
@@ -399,12 +377,9 @@ public class TheaterController implements Initializable {
                 } else {
                     temp.get(temp.size() - 1).setMinSize(51, 30);
                     positionx += 45;
-                }
-                
-                theaterpane.getChildren().add(temp.get(temp.size() - 1));
-                
-            }
-            
+                }             
+                theaterpane.getChildren().add(temp.get(temp.size() - 1));              
+            }          
             if (seat.get(0).getName().equals("Deluxe Seat")) {
                 positiony = 596;
             } else {
@@ -412,10 +387,5 @@ public class TheaterController implements Initializable {
             }
             positionx = 10;
         }
-    }
-
-    void Menu() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-    
+    }   
 }

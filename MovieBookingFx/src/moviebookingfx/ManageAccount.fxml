@@ -9,45 +9,52 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<SplitPane dividerPositions="0.29797979797979796" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="moviebookingfx.ManageAccountController">
-  <items>
-    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
-         <children>
-            <Label layoutX="32.0" layoutY="14.0" text="ADD NEW MEMBER">
-               <font>
-                  <Font size="33.0" />
-               </font>
-            </Label>
-            <Label layoutX="61.0" layoutY="101.0" text="E-MAIL" />
-            <Label layoutX="61.0" layoutY="132.0" text="PHONENUMBER" />
-            <Label layoutX="61.0" layoutY="161.0" text="FIRSTNAME" />
-            <Label layoutX="62.0" layoutY="192.0" text="LASTNAME" />
-            <Label layoutX="62.0" layoutY="222.0" text="DATEOFBIRTH" />
-            <Label layoutX="62.0" layoutY="253.0" prefHeight="17.0" prefWidth="60.0" text="MEMBER" />
-            <TextField fx:id="email" layoutX="158.0" layoutY="99.0" />
-            <TextField fx:id="phonenumber" layoutX="158.0" layoutY="128.0" />
-            <TextField fx:id="firstname" layoutX="158.0" layoutY="157.0" />
-            <TextField fx:id="lastname" layoutX="158.0" layoutY="188.0" />
-            <TextField fx:id="dateofbirth" layoutX="158.0" layoutY="218.0" promptText="dd/mm/yyyy" />
-            <ComboBox fx:id="memberselector" layoutX="158.0" layoutY="249.0" prefWidth="150.0" />
-            <Button fx:id="comfirmadd" layoutX="239.0" layoutY="292.0" mnemonicParsing="false" onAction="#addMember" prefHeight="25.0" prefWidth="69.0" text="CONFIRM" />
-         </children></AnchorPane>
-    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
-         <children>
-            <Button fx:id="back" layoutX="760.0" layoutY="36.0" mnemonicParsing="false" text="BACK" />
-            <Label layoutX="304.0" layoutY="24.0" text="MEMBER TABLE">
-               <font>
-                  <Font size="33.0" />
-               </font>
-            </Label>
-            <ScrollPane fx:id="scrollpane" layoutX="34.0" layoutY="133.0" prefHeight="587.0" prefWidth="776.0">
-              <content>
-                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="583.0" prefWidth="772.0" />
-              </content>
-            </ScrollPane>
-            <TextField fx:id="searchfield" layoutX="92.0" layoutY="95.0" />
-            <Label layoutX="34.0" layoutY="99.0" text="SEARCH" />
-            <Button fx:id="search" layoutX="261.0" layoutY="95.0" mnemonicParsing="false" onAction="#search" text="SEARCH" />
-         </children></AnchorPane>
-  </items>
-</SplitPane>
+
+<AnchorPane fx:id="backpane" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="moviebookingfx.ManageAccountController">
+   <children>
+      <SplitPane dividerPositions="0.29797979797979796" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1200.0">
+        <items>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+               <children>
+                  <Label layoutX="32.0" layoutY="14.0" text="ADD NEW MEMBER">
+                     <font>
+                        <Font size="33.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="61.0" layoutY="101.0" text="E-MAIL" />
+                  <Label layoutX="61.0" layoutY="132.0" text="PHONENUMBER" />
+                  <Label layoutX="61.0" layoutY="161.0" text="FIRSTNAME" />
+                  <Label layoutX="62.0" layoutY="192.0" text="LASTNAME" />
+                  <Label layoutX="62.0" layoutY="222.0" text="DATEOFBIRTH" />
+                  <Label layoutX="62.0" layoutY="253.0" prefHeight="17.0" prefWidth="60.0" text="MEMBER" />
+                  <TextField fx:id="email" layoutX="158.0" layoutY="99.0" />
+                  <TextField fx:id="phonenumber" layoutX="158.0" layoutY="128.0" />
+                  <TextField fx:id="firstname" layoutX="158.0" layoutY="157.0" />
+                  <TextField fx:id="lastname" layoutX="158.0" layoutY="188.0" />
+                  <TextField fx:id="dateofbirth" layoutX="158.0" layoutY="218.0" promptText="dd/mm/yyyy" />
+                  <ComboBox fx:id="memberselector" layoutX="158.0" layoutY="249.0" prefWidth="150.0" />
+                  <Button fx:id="comfirmadd" layoutX="239.0" layoutY="292.0" mnemonicParsing="false" onAction="#addMember" prefHeight="25.0" prefWidth="69.0" text="CONFIRM" />
+               </children>
+            </AnchorPane>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+               <children>
+                  <Button fx:id="back" layoutX="760.0" layoutY="36.0" mnemonicParsing="false" onMouseClicked="#back" text="BACK" />
+                  <Label layoutX="304.0" layoutY="24.0" text="MEMBER TABLE">
+                     <font>
+                        <Font size="33.0" />
+                     </font>
+                  </Label>
+                  <ScrollPane fx:id="scrollpane" layoutX="34.0" layoutY="133.0" prefHeight="587.0" prefWidth="776.0">
+                    <content>
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="583.0" prefWidth="772.0" />
+                    </content>
+                  </ScrollPane>
+                  <TextField fx:id="searchfield" layoutX="92.0" layoutY="95.0" />
+                  <Label layoutX="34.0" layoutY="99.0" text="SEARCH" />
+                  <Button fx:id="search" layoutX="261.0" layoutY="95.0" mnemonicParsing="false" onAction="#search" text="SEARCH" />
+               </children>
+            </AnchorPane>
+        </items>
+      </SplitPane>
+   </children>
+</AnchorPane>
