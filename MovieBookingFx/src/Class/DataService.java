@@ -45,21 +45,25 @@ public class DataService {
     public void setEm(EntityManager em) {
         this.em = em;
     }
+
     public void createReport(Report report) {
-         this.em.getTransaction().begin();
+        this.em.getTransaction().begin();
         this.em.persist(report);
         this.em.getTransaction().commit();
     }
-    public void createPromotion(Promotion promotion){
+
+    public void createPromotion(Promotion promotion) {
         this.em.getTransaction().begin();
         this.em.persist(promotion);
         this.em.getTransaction().commit();
     }
-    public void createAccount(Account account){
+
+    public void createAccount(Account account) {
         this.em.getTransaction().begin();
         this.em.persist(account);
         this.em.getTransaction().commit();
     }
+
     public void createMovie(Movie movie) {
         this.em.getTransaction().begin();
         this.em.persist(movie);
@@ -92,25 +96,34 @@ public class DataService {
         return results;
     }
 
-    public Account getAccount(String email){
-        String sql = "SELECT c FROM Account c Where c.email = '" + email+ "'";
+    public Account getAccount(String email) {
+        String sql = "SELECT c FROM Account c Where c.email = '" + email + "'";
         TypedQuery<Account> query = em.createQuery(sql, Account.class);
         List<Account> results = query.getResultList();
         return results.get(0);
     }
-    
-    public Promotion getPromotion(String code){
-        String sql = "SELECT c FROM Promotion c Where c.code = '" + code+ "'";
+
+    public List<Report> getAllReport() {
+        String sql = "SELECT c FROM Report c";
+        TypedQuery<Report> query = em.createQuery(sql, Report.class);
+        List<Report> results = query.getResultList();
+        return results;
+    }
+
+    public Promotion getPromotion(String code) {
+        String sql = "SELECT c FROM Promotion c Where c.code = '" + code + "'";
         TypedQuery<Promotion> query = em.createQuery(sql, Promotion.class);
         List<Promotion> results = query.getResultList();
         return results.get(0);
     }
+
     public List<Promotion> getAllPromotion() {
         String sql = "SELECT c FROM Promotion c";
         TypedQuery<Promotion> query = em.createQuery(sql, Promotion.class);
         List<Promotion> results = query.getResultList();
         return results;
     }
+
     public List<Account> getAllAccount() {
         String sql = "SELECT c FROM Account c";
         TypedQuery<Account> query = em.createQuery(sql, Account.class);
