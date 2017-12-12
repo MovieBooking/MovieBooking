@@ -144,11 +144,7 @@ public class TheaterController implements Initializable {
         grid.add(promotion_code, 1, 1);
         
         Node submitButton = dialog.getDialogPane().lookupButton(submitButtonType);
-        submitButton.setDisable(true);
-        
-        account.textProperty().addListener((observable, oldValue, newValue) -> {
-            submitButton.setDisable(newValue.trim().isEmpty());
-        });
+       
         dialog.getDialogPane().setContent(grid);
         Platform.runLater(() -> account.requestFocus());
         dialog.setResultConverter(dialogButton -> {
@@ -175,9 +171,38 @@ public class TheaterController implements Initializable {
                             check = true;
                             break;
                         }
-                    }
-                    
+                        else if(AccountPromotion.getValue().equals("")){
+                            try {
+                                nextDialog(AccountPromotion.getKey(), "");
+                            } catch (IOException ex) {
+                                Logger.getLogger(TheaterController.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                            check = true;
+                            break;
+                        }
+                    }   
                 }
+                else if(AccountPromotion.getKey().equals(""))
+                   for (Promotion promotion1 : temp1) {
+                        if (AccountPromotion.getValue().equals(promotion1.getCode())) {
+                            try {
+                                nextDialog("", AccountPromotion.getValue());
+                            } catch (IOException ex) {
+                                Logger.getLogger(TheaterController.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                            check = true;
+                            break;
+                        }
+                        else if(AccountPromotion.getValue().equals("")){
+                            try {
+                                nextDialog("", "");
+                            } catch (IOException ex) {
+                                Logger.getLogger(TheaterController.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                            check = true;
+                            break;
+                        }
+                    }  
             }
             if (check != true) {
                 confirmagain();
@@ -188,7 +213,7 @@ public class TheaterController implements Initializable {
     public void confirmagain() {
         Dialog<Pair<String, String>> dialog = new Dialog<>();
         dialog.setTitle("PAYMENT");
-        dialog.setHeaderText("Wrong E-mail OR Promotion-Code");
+        dialog.setHeaderText("Wrong Account Or Promotion");
         
         ButtonType submitButtonType = new ButtonType("Submit", ButtonData.OK_DONE);
         dialog.getDialogPane().getButtonTypes().addAll(submitButtonType, ButtonType.CANCEL);
@@ -209,11 +234,7 @@ public class TheaterController implements Initializable {
         grid.add(promotion_code, 1, 1);
         
         Node submitButton = dialog.getDialogPane().lookupButton(submitButtonType);
-        submitButton.setDisable(true);
-        
-        account.textProperty().addListener((observable, oldValue, newValue) -> {
-            submitButton.setDisable(newValue.trim().isEmpty());
-        });
+       
         dialog.getDialogPane().setContent(grid);
         Platform.runLater(() -> account.requestFocus());
         dialog.setResultConverter(dialogButton -> {
@@ -229,7 +250,7 @@ public class TheaterController implements Initializable {
             List<Account> temp = _dataService.getAllAccount();
             List<Promotion> temp1 = _dataService.getAllPromotion();
             for (Account account1 : temp) {
-                if (AccountPromotion.getKey().equals(account1.getEmail())) {
+                if (check==false||AccountPromotion.getKey().equals(account1.getEmail())) {
                     for (Promotion promotion1 : temp1) {
                         if (AccountPromotion.getValue().equals(promotion1.getCode())) {
                             try {
@@ -240,28 +261,64 @@ public class TheaterController implements Initializable {
                             check = true;
                             break;
                         }
-                    }
-                    
+                        else if(AccountPromotion.getValue().equals("")){
+                            try {
+                                nextDialog(AccountPromotion.getKey(), "");
+                            } catch (IOException ex) {
+                                Logger.getLogger(TheaterController.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                            check = true;
+                            break;
+                        }
+                    }   
                 }
+                else if(check==false||AccountPromotion.getKey().equals(""))
+                   for (Promotion promotion1 : temp1) {
+                        if (AccountPromotion.getValue().equals(promotion1.getCode())) {
+                            try {
+                                nextDialog("", AccountPromotion.getValue());
+                            } catch (IOException ex) {
+                                Logger.getLogger(TheaterController.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                            check = true;
+                            break;
+                        }
+                        else if(AccountPromotion.getValue().equals("")){
+                            try {
+                                nextDialog("", "");
+                            } catch (IOException ex) {
+                                Logger.getLogger(TheaterController.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                            check = true;
+                            break;
+                        }
+                    }  
             }
             if (check != true) {
                 confirmagain();
             }
-            
         });
     }
     
     public void nextDialog(String email, String code) throws IOException {
         Alert alert = new Alert(AlertType.CONFIRMATION);
         alert.setTitle("Confirm your payment.");
-        Account accout = _dataService.getAccount(email);
-        Promotion promotion = _dataService.getPromotion(code);
+        Account account;
+        Promotion promotion;
+        if(!email.equals(""))
+            account = _dataService.getAccount(email);
+        else
+            account = new Account("-","-", "-", "-", "-");
+        if(!code.equals(""))
+             promotion = _dataService.getPromotion(code);
+        else
+            promotion = new Promotion("-", "-","-", 0);
         
         int sumofcost = Integer.parseInt(cost.getText());
-        int accountdis = sumofcost * accout.getDiscount() / 100;
+        int accountdis = sumofcost * account.getDiscount() / 100;
         float promotiondis = sumofcost * promotion.getDiscount() / 100;
         float totalcost = sumofcost - (accountdis + promotiondis);
-        String discount = (String.format("COST : %s.00 BATH\n %sDiscount : %d.00 BATH\nPromotion %s Discount : %.2f BATH\nTOTAL : %.2f BATH", cost.getText(), accout.getMember(), accountdis, promotion.getName(), promotiondis, totalcost));
+        String discount = (String.format("COST : %s.00 BATH\n %sDiscount : %d.00 BATH\nPromotion %s Discount : %.2f BATH\nTOTAL : %.2f BATH", cost.getText(), account.getMember(), accountdis, promotion.getName(), promotiondis, totalcost));
         alert.setContentText(discount);
         
         Optional<ButtonType> result = alert.showAndWait();
@@ -275,7 +332,7 @@ public class TheaterController implements Initializable {
                     }
                 }
             }
-            Report report = new Report(theater, ticket_seat, accout, cost.getText(), promotion);
+            Report report = new Report(theater, ticket_seat, account, cost.getText(), promotion);
             _dataService.createReport(report);
             finish();
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("Timetable.fxml"));
