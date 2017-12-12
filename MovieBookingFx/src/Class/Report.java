@@ -26,16 +26,16 @@ public class Report implements Serializable{
     private String promotion;
     private String cost;
     private String time;
-    private String report=" ";
+    private String report="";
     public Report(Theater theater,List<Seats> seats,Account account,String cost,Promotion promotion){
         Calendar now = Calendar.getInstance();
         this.time = now.getTime().toString();
-        this.theater = "THEATER : "+theater.getTheater_id();
-        this.account = "ACCOUNT : "+account.getEmail();
-        this.promotion = "PROMOTION : "+promotion.getName()+" : "+promotion.getCode();
+        this.theater = ""+theater.getTheater_id()+" : "+theater.getTime();
+        this.account = ""+account.getEmail();
+        this.promotion = ""+promotion.getName()+" : "+promotion.getCode();
         this.cost = cost;
         for (Seats seat : seats) {
-            String temp = (String.format("Seat : %-20s Type : %-20s Cost :%-20s \n", seat.getPosition(),seat.getName(),""+(seat.getPrice()+theater.getScreen().getPrice())));
+            String temp = (String.format("Seat : %-10s Type : %-15s Cost :%-10s \n", seat.getPosition(),seat.getName(),""+(seat.getPrice()+theater.getScreen().getPrice())));
             report = report.concat(temp);
         }
     }

@@ -160,7 +160,7 @@ public class TheaterController implements Initializable {
             List<Account> temp = _dataService.getAllAccount();
             List<Promotion> temp1 = _dataService.getAllPromotion();
             for (Account account1 : temp) {
-                if (AccountPromotion.getKey().equals(account1.getEmail())) {
+                if (check==false||AccountPromotion.getKey().equals(account1.getEmail())) {
                     for (Promotion promotion1 : temp1) {
                         if (AccountPromotion.getValue().equals(promotion1.getCode())) {
                             try {
@@ -182,7 +182,7 @@ public class TheaterController implements Initializable {
                         }
                     }   
                 }
-                else if(AccountPromotion.getKey().equals(""))
+                else if(check==false||AccountPromotion.getKey().equals(""))
                    for (Promotion promotion1 : temp1) {
                         if (AccountPromotion.getValue().equals(promotion1.getCode())) {
                             try {
@@ -203,10 +203,14 @@ public class TheaterController implements Initializable {
                             break;
                         }
                     }  
+                if (check == true) {
+                    break;
+                }
             }
             if (check != true) {
                 confirmagain();
             }
+            
         });
     }
     
@@ -293,6 +297,10 @@ public class TheaterController implements Initializable {
                             break;
                         }
                     }  
+                 if (check == true) {
+                    break;
+                }
+
             }
             if (check != true) {
                 confirmagain();

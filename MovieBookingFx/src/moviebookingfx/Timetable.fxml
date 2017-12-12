@@ -7,16 +7,16 @@
 <?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane id="AnchorPane" fx:id="backpane" prefHeight="800.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="moviebookingfx.TimetableController">
+<AnchorPane id="AnchorPane" fx:id="backpane" prefHeight="800.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="moviebookingfx.TimetableController">
    <children>
-      <SplitPane dividerPositions="0.5" layoutX="10.0" layoutY="10.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1200.0">
+      <SplitPane dividerPositions="0.5" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1200.0">
          <items>
-            <ScrollPane fx:id="scrollpane" prefHeight="200.0" prefWidth="200.0">
+            <ScrollPane fx:id="scrollpane" minHeight="800.0" minWidth="600.0" prefHeight="200.0" prefWidth="200.0">
               <content>
-                <AnchorPane fx:id="anchor_scroll" minHeight="0.0" minWidth="0.0" prefHeight="800.0" prefWidth="591.0" />
+                <AnchorPane fx:id="anchor_scroll" minHeight="772.0" minWidth="594.0" prefHeight="772.0" prefWidth="594.0" />
               </content>
             </ScrollPane>
-            <AnchorPane fx:id="back_rightpane" prefHeight="200.0" prefWidth="200.0">
+            <AnchorPane fx:id="back_rightpane" minWidth="600.0" prefHeight="200.0" prefWidth="200.0">
                <children>
                   <ScrollPane fx:id="selectpane" layoutX="18.0" layoutY="93.0" prefHeight="700.0" prefWidth="563.0">
                      <content>

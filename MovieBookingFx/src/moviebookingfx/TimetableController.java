@@ -98,7 +98,6 @@ public class TimetableController implements Initializable {
         //left pane
 
         GridPane gridpane = new GridPane();
-        gridpane.setStyle("-fx-border-color:blue");
         gridpane.setMinSize(570, 250);
         gridpane.setHgap(100);
         gridpane.getColumnConstraints().add(new ColumnConstraints(570));
@@ -112,7 +111,6 @@ public class TimetableController implements Initializable {
 
 //         right pane
          GridPane gridpane2 = new GridPane();
-        gridpane2.setStyle("-fx-border-color:blue");
         gridpane2.setMinSize(570, 250);
         gridpane2.setHgap(100);
         gridpane2.getColumnConstraints().add(new ColumnConstraints(570));

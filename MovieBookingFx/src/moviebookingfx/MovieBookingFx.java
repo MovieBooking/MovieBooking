@@ -26,9 +26,7 @@ public class MovieBookingFx extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
 
-
-
-        Parent root = FXMLLoader.load(getClass().getResource("Timetable.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("Report.fxml"));
         primaryStage.setTitle("THEATER");
         primaryStage.setScene(new Scene(root, 1200, 800));
         primaryStage.show();
