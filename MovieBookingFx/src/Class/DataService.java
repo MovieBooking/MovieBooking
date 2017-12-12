@@ -45,7 +45,11 @@ public class DataService {
     public void setEm(EntityManager em) {
         this.em = em;
     }
-    
+    public void createReport(Report report) {
+         this.em.getTransaction().begin();
+        this.em.persist(report);
+        this.em.getTransaction().commit();
+    }
     public void createPromotion(Promotion promotion){
         this.em.getTransaction().begin();
         this.em.persist(promotion);
@@ -88,6 +92,25 @@ public class DataService {
         return results;
     }
 
+    public Account getAccount(String email){
+        String sql = "SELECT c FROM Account c Where c.email = '" + email+ "'";
+        TypedQuery<Account> query = em.createQuery(sql, Account.class);
+        List<Account> results = query.getResultList();
+        return results.get(0);
+    }
+    
+    public Promotion getPromotion(String code){
+        String sql = "SELECT c FROM Promotion c Where c.code = '" + code+ "'";
+        TypedQuery<Promotion> query = em.createQuery(sql, Promotion.class);
+        List<Promotion> results = query.getResultList();
+        return results.get(0);
+    }
+    public List<Promotion> getAllPromotion() {
+        String sql = "SELECT c FROM Promotion c";
+        TypedQuery<Promotion> query = em.createQuery(sql, Promotion.class);
+        List<Promotion> results = query.getResultList();
+        return results;
+    }
     public List<Account> getAllAccount() {
         String sql = "SELECT c FROM Account c";
         TypedQuery<Account> query = em.createQuery(sql, Account.class);

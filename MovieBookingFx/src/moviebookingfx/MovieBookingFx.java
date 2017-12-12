@@ -28,11 +28,11 @@ public class MovieBookingFx extends Application {
 
 
 
-        Parent root = FXMLLoader.load(getClass().getResource("ManageAccount.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("Timetable.fxml"));
 
 
 
-        primaryStage.setTitle("HELLO world");
+        primaryStage.setTitle("MOVIE");
         primaryStage.setScene(new Scene(root, 1200, 800));
         primaryStage.show();
 
@@ -42,7 +42,7 @@ public class MovieBookingFx extends Application {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        Report x = new  Report();
+     
         DataService dataService = new DataService();
         
         //dataService.createPromotion(new Promotion("BOXOFFICE", "00000001", "09/12/2019", 5));

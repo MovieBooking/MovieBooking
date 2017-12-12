@@ -10,19 +10,27 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.*;
 import javafx.geometry.Insets;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.control.*;
+import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.ButtonBar.ButtonData;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.*;
 import javafx.scene.text.Font;
+import javafx.util.Pair;
 
 /**
  * FXML Controller class
@@ -38,17 +46,32 @@ public class TheaterController implements Initializable {
     private SplitPane Splitpane;
     
     @FXML
-    private Button backbutton;
-
+    private AnchorPane theaterpane;
+    
     @FXML
-    private ScrollPane scrollpane;
-
+    private Button back;
+    
+    @FXML
+    private DialogPane dialog;
+    
+    @FXML
+    private TextField phonenumber;
+    
+    @FXML
+    private TextField promotion;
+    
+    @FXML
+    private Label totalcost;
+    
+    @FXML
+    private Label discount;
+    
     @FXML
     private Button buybutton;
-
+    
     @FXML
-    private AnchorPane theaterpane;
-
+    private ScrollPane scrollpane;
+    
     @FXML
     private AnchorPane ticketpane;
     
@@ -56,16 +79,18 @@ public class TheaterController implements Initializable {
     private Label cost;
     
     int theater_id;
+    int theater_index;
     int ticket_id;
     private DataService _dataService = new DataService();
     private Theater theater;
     private List<Pane> ticket = new ArrayList<Pane>();
-
+    private List<Seats> ticket_seat = new ArrayList<Seats>();
+    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         
     }
-
+    
     public Pane createPane(String name, String position, int cost, String time, String seat) {
         cost += theater.getScreen().getPrice();
         Pane pane = new Pane();
@@ -93,9 +118,177 @@ public class TheaterController implements Initializable {
         pane.setId(position);
         return pane;
     }
-
+    
     @FXML
     public void confirm(ActionEvent event) {
+        Dialog<Pair<String, String>> dialog = new Dialog<>();
+        dialog.setTitle("PAYMENT");
+        dialog.setHeaderText("Input your Accout and Promotion.");
+        
+        ButtonType submitButtonType = new ButtonType("Submit", ButtonData.OK_DONE);
+        dialog.getDialogPane().getButtonTypes().addAll(submitButtonType, ButtonType.CANCEL);
+        
+        GridPane grid = new GridPane();
+        grid.setHgap(10);
+        grid.setVgap(10);
+        grid.setPadding(new Insets(20, 150, 10, 10));
+        
+        TextField account = new TextField();
+        account.setPromptText("E-mail");
+        TextField promotion_code = new TextField();
+        promotion_code.setPromptText("Promotion Code");
+        
+        grid.add(new Label("E-mail :"), 0, 0);
+        grid.add(account, 1, 0);
+        grid.add(new Label("Promotion :"), 0, 1);
+        grid.add(promotion_code, 1, 1);
+        
+        Node submitButton = dialog.getDialogPane().lookupButton(submitButtonType);
+        submitButton.setDisable(true);
+        
+        account.textProperty().addListener((observable, oldValue, newValue) -> {
+            submitButton.setDisable(newValue.trim().isEmpty());
+        });
+        dialog.getDialogPane().setContent(grid);
+        Platform.runLater(() -> account.requestFocus());
+        dialog.setResultConverter(dialogButton -> {
+            if (dialogButton == submitButtonType) {
+                return new Pair<>(account.getText(), promotion_code.getText());
+            }
+            return null;
+        });
+        
+        Optional<Pair<String, String>> result = dialog.showAndWait();
+        result.ifPresent(AccountPromotion -> {
+            boolean check = false;
+            List<Account> temp = _dataService.getAllAccount();
+            List<Promotion> temp1 = _dataService.getAllPromotion();
+            for (Account account1 : temp) {
+                if (AccountPromotion.getKey().equals(account1.getEmail())) {
+                    for (Promotion promotion1 : temp1) {
+                        if (AccountPromotion.getValue().equals(promotion1.getCode())) {
+                            try {
+                                nextDialog(AccountPromotion.getKey(), AccountPromotion.getValue());
+                            } catch (IOException ex) {
+                                Logger.getLogger(TheaterController.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                            check = true;
+                            break;
+                        }
+                    }
+                    
+                }
+            }
+            if (check != true) {
+                confirmagain();
+            }
+        });
+    }
+    
+    public void confirmagain() {
+        Dialog<Pair<String, String>> dialog = new Dialog<>();
+        dialog.setTitle("PAYMENT");
+        dialog.setHeaderText("Wrong E-mail OR Promotion-Code");
+        
+        ButtonType submitButtonType = new ButtonType("Submit", ButtonData.OK_DONE);
+        dialog.getDialogPane().getButtonTypes().addAll(submitButtonType, ButtonType.CANCEL);
+        
+        GridPane grid = new GridPane();
+        grid.setHgap(10);
+        grid.setVgap(10);
+        grid.setPadding(new Insets(20, 150, 10, 10));
+        
+        TextField account = new TextField();
+        account.setPromptText("E-mail");
+        TextField promotion_code = new TextField();
+        promotion_code.setPromptText("Promotion Code");
+        
+        grid.add(new Label("E-mail :"), 0, 0);
+        grid.add(account, 1, 0);
+        grid.add(new Label("Promotion :"), 0, 1);
+        grid.add(promotion_code, 1, 1);
+        
+        Node submitButton = dialog.getDialogPane().lookupButton(submitButtonType);
+        submitButton.setDisable(true);
+        
+        account.textProperty().addListener((observable, oldValue, newValue) -> {
+            submitButton.setDisable(newValue.trim().isEmpty());
+        });
+        dialog.getDialogPane().setContent(grid);
+        Platform.runLater(() -> account.requestFocus());
+        dialog.setResultConverter(dialogButton -> {
+            if (dialogButton == submitButtonType) {
+                return new Pair<>(account.getText(), promotion_code.getText());
+            }
+            return null;
+        });
+        
+        Optional<Pair<String, String>> result = dialog.showAndWait();
+        result.ifPresent(AccountPromotion -> {
+            boolean check = false;
+            List<Account> temp = _dataService.getAllAccount();
+            List<Promotion> temp1 = _dataService.getAllPromotion();
+            for (Account account1 : temp) {
+                if (AccountPromotion.getKey().equals(account1.getEmail())) {
+                    for (Promotion promotion1 : temp1) {
+                        if (AccountPromotion.getValue().equals(promotion1.getCode())) {
+                            try {
+                                nextDialog(AccountPromotion.getKey(), AccountPromotion.getValue());
+                            } catch (IOException ex) {
+                                Logger.getLogger(TheaterController.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                            check = true;
+                            break;
+                        }
+                    }
+                    
+                }
+            }
+            if (check != true) {
+                confirmagain();
+            }
+            
+        });
+    }
+    
+    public void nextDialog(String email, String code) throws IOException {
+        Alert alert = new Alert(AlertType.CONFIRMATION);
+        alert.setTitle("Confirm your payment.");
+        Account accout = _dataService.getAccount(email);
+        Promotion promotion = _dataService.getPromotion(code);
+        
+        int sumofcost = Integer.parseInt(cost.getText());
+        int accountdis = sumofcost * accout.getDiscount() / 100;
+        float promotiondis = sumofcost * promotion.getDiscount() / 100;
+        float totalcost = sumofcost - (accountdis + promotiondis);
+        String discount = (String.format("COST : %s.00 BATH\n %sDiscount : %d.00 BATH\nPromotion %s Discount : %.2f BATH\nTOTAL : %.2f BATH", cost.getText(), accout.getMember(), accountdis, promotion.getName(), promotiondis, totalcost));
+        alert.setContentText(discount);
+        
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.get() == ButtonType.OK) {
+            for (Pane pane : ticket) {
+                for (List<Seats> seat : theater.getSeats()) {
+                    for (Seats seats : seat) {
+                        if (pane.getId().equals(seats.getPosition())) {
+                            ticket_seat.add(seats);
+                        }
+                    }
+                }
+            }
+            Report report = new Report(theater, ticket_seat, accout, cost.getText(), promotion);
+            _dataService.createReport(report);
+            finish();
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("Timetable.fxml"));
+            Parent root = (Parent) fxmlLoader.load();
+            Splitpane.getItems().setAll(root);
+           
+        } else {
+            setTheaterID(theater_id, theater_index);
+        }
+    }
+    
+    public void finish() {
+        
         _dataService.transactionBegin();
         for (Pane pane : ticket) {
             for (List<Seats> seat : theater.getSeats()) {
@@ -108,29 +301,22 @@ public class TheaterController implements Initializable {
         }
         _dataService.transactionCommit();
     }
-
+    
     @FXML
-    public void back(ActionEvent event) throws IOException{
+    public void back(ActionEvent event) throws IOException {
         
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("Timetable.fxml"));
-        Parent root = (Parent) fxmlLoader.load(); 
+        Parent root = (Parent) fxmlLoader.load();
         Splitpane.getItems().setAll(root);
         
-        
-        
-        System.out.println("xxxx");
     }
     
     @FXML
-    public void setTheaterID(int theater_id,int theater_index)
-    {
-//        this.theater_id = theater_id;
-        System.out.println("here is theter theater_id (receive) = "+theater_id);
-        System.out.println("here is theter theater_index (receive) = "+theater_index);
-        
+    public void setTheaterID(int theater_id, int theater_index) {
+        this.theater_id = theater_id;
+        this.theater_index = theater_index;
+
         ticket_id = 0;
-        
-        
         
         GridPane gridpane = new GridPane();
         gridpane.setStyle("-fx-border-color:blue;");
@@ -138,16 +324,15 @@ public class TheaterController implements Initializable {
         gridpane.setHgap(100);
         gridpane.getColumnConstraints().add(new ColumnConstraints(228));
         scrollpane.setContent(gridpane);
-
+        
         List<Button> temp = new ArrayList<Button>();
         this.theater = _dataService.getTheater(theater_id).get(theater_index);
         
-        Label label = new Label(String.format("THEATER: %d\nMOVIE : %s\nTIME: %s\n",theater_id ,theater.getMovie().getName(),theater.getTime() ));
+        Label label = new Label(String.format("THEATER: %d\nMOVIE : %s\nTIME: %s\n", theater_id, theater.getMovie().getName(), theater.getTime()));
         label.setLayoutX(200);
         label.setLayoutY(20);
         theaterpane.getChildren().add(label);
-       
-        System.out.println(theater);
+        
         float positionx = 10;
         float positiony = 672;
         String styleH = "-fx-background-color:blue;-fx-text-fill:white;-fx-border-color:black";
@@ -157,10 +342,10 @@ public class TheaterController implements Initializable {
         for (List<Seats> seat : theater.getSeats()) {
             for (Seats seats : seat) {
                 temp.add(new Button(seats.getPosition()));
-                if (seats.getIsBook() == true) {    
+                if (seats.getIsBook() == true) {
                     temp.get(temp.size() - 1).setStyle("-fx-background-color:gray;-fx-text-fill:black;-fx-border-color:black");
                 } else {
-
+                    
                     if (seats.getName().equals("Normal Seat")) {
                         temp.get(temp.size() - 1).setStyle(styleN);
                     } else if (seats.getName().equals("Deluxe Seat")) {
@@ -181,25 +366,24 @@ public class TheaterController implements Initializable {
                                         } else {
                                             button.setStyle(styleH);
                                         }
-
+                                        
                                         for (int i = 0; i < ticket.size(); i++) {
                                             if (ticket.get(i).getId().equals(seats.getPosition())) {
                                                 ticket_id--;
-                                                cost.setText(""+(Integer.parseInt(cost.getText())-seats.getPrice()-theater.getScreen().getPrice()));
+                                                cost.setText("" + (Integer.parseInt(cost.getText()) - seats.getPrice() - theater.getScreen().getPrice()));
                                                 gridpane.getChildren().remove(ticket.get(i));
                                                 ticket.remove(i);
                                             }
                                         }
                                     } else {
                                         button.setStyle(stylep);
-                                        cost.setText(""+(Integer.parseInt(cost.getText())+seats.getPrice()+theater.getScreen().getPrice()));
+                                        cost.setText("" + (Integer.parseInt(cost.getText()) + seats.getPrice() + theater.getScreen().getPrice()));
                                         ticket.add(createPane(theater.getMovie().getName(), seats.getPosition(), seats.getPrice(), theater.getTime(), seats.getName()));
                                         gridpane.add(ticket.get(ticket.size() - 1), 0, ticket_id);
-                                        System.out.println(seats);
                                         ticket_id++;
                                     }
                                 }
-                               
+                                
                             }
                         }
                     }
@@ -210,17 +394,17 @@ public class TheaterController implements Initializable {
                 temp.get(temp.size() - 1).setLayoutX(positionx);
                 temp.get(temp.size() - 1).setLayoutY(positiony);
                 if (seats.getName().equals("Deluxe Seat")) {
-                    temp.get(temp.size() - 1).setMinSize(100, 30);      
+                    temp.get(temp.size() - 1).setMinSize(100, 30);
                     positionx += 150;
                 } else {
-                    temp.get(temp.size() - 1).setMinSize(51, 30);                
+                    temp.get(temp.size() - 1).setMinSize(51, 30);
                     positionx += 45;
                 }
-               
+                
                 theaterpane.getChildren().add(temp.get(temp.size() - 1));
-                 
+                
             }
-
+            
             if (seat.get(0).getName().equals("Deluxe Seat")) {
                 positiony = 596;
             } else {
@@ -229,5 +413,5 @@ public class TheaterController implements Initializable {
             positionx = 10;
         }
     }
-
+    
 }
