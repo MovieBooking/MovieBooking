@@ -6,16 +6,21 @@
 package moviebookingfx;
 
 import Class.*;
+import java.io.IOException;
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
+import javafx.scene.Parent;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 
@@ -27,6 +32,9 @@ public class ReportController implements Initializable {
 
     @FXML
     private VBox vbox;
+    
+    @FXML
+    private AnchorPane backpane;
 
     private TableView<Report> table = new TableView<Report>();
     private ObservableList<Report> data;
@@ -83,7 +91,14 @@ public class ReportController implements Initializable {
         vbox.getChildren().addAll( table);
 
     }
-    public void Back(){
+         @FXML
+        public void back() throws IOException {
         
-    }
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("Menu.fxml"));
+        Parent root = (Parent) fxmlLoader.load();
+        MenuController controller = fxmlLoader.<MenuController>getController();
+        fxmlLoader.setController(controller);
+        backpane.getChildren().setAll(root);   
+    } 
+  
 }

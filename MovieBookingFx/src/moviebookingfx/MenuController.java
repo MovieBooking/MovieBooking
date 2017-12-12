@@ -45,6 +45,27 @@ public class MenuController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
     }
+      @FXML
+     public void jumpLog() throws IOException {
+         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("Report.fxml"));
+        Parent root = (Parent) fxmlLoader.load();
+        ReportController controller = fxmlLoader.<ReportController>getController();
+        fxmlLoader.setController(controller);
+
+        backpane.getChildren().setAll(root);
+          
+    }
+    
+      @FXML
+     public void jumpManageAccount() throws IOException {
+         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("ManageAccount.fxml"));
+        Parent root = (Parent) fxmlLoader.load();
+        ManageAccountController controller = fxmlLoader.<ManageAccountController>getController();
+        fxmlLoader.setController(controller);
+
+        backpane.getChildren().setAll(root);
+//            
+    }
 
    @FXML
     public void jumpManageTheater() throws IOException {
@@ -73,16 +94,9 @@ public class MenuController implements Initializable {
           
     }
     
-     @FXML
-     public void jumpManageAccount() throws IOException {
-         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("ManageAccount.fxml"));
-        Parent root = (Parent) fxmlLoader.load();
-        ManageAccountController controller = fxmlLoader.<ManageAccountController>getController();
-        fxmlLoader.setController(controller);
-
-        backpane.getChildren().setAll(root);
-//            
-    }
+   
+     
+     
   
 
 }

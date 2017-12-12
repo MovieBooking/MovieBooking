@@ -4,10 +4,13 @@
  * and open the template in the editor.
  */
 package moviebookingfx;
+import java.util.Collection;
 import Class.*;
+import java.util.*;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -103,28 +106,50 @@ public class TimetableController implements Initializable {
                     gridpane2.getChildren().remove(gridpane2.getChildren().size() - 1);
                 }
                 int index = 0;
+              
                 for (int i = 0; i < selectMovie.size(); i++) {
                     if (searchbox.getValue().equals(selectMovie.get(i).getName() + "(" + selectMovie.get(i).getLanguage() + ")")) {
+//                         Collections.sort(selectMovie.get(i).getTheater());
+                         System.out.println("selectMovie.get(i).getTheater("+selectMovie.get(i).getTheater());
+                      
                         int temp = selectMovie.get(i).getTheater().get(0).getTheater_id();
+
                         for (int j = 0; j < selectMovie.get(i).getTheater().size(); j++) {
                             if (selectMovie.get(i).getTheater().get(j).getTheater_id() != temp || j == selectMovie.get(i).getTheater().size() - 1) {
-                                gridpane2.add(createMovie1(right_theat), 0, index);
+                                if( j==selectMovie.get(i).getTheater().size() - 1)
+                                {
+                                    right_theat.add(selectMovie.get(i).getTheater().get(j));
+                                }
+                        
+                                gridpane2.add(createMovie(right_theat), 0, index);
                                 while (right_theat.size() > 0) {
                                     right_theat.remove(right_theat.size() - 1);
                                 }
+                
                                 index++;
-                            } else {
-                                right_theat.add(selectMovie.get(i).getTheater().get(j));
-                            }
+                            } 
+                                right_theat.add(selectMovie.get(i).getTheater().get(j));                         
                             temp = selectMovie.get(i).getTheater().get(j).getTheater_id();
                         }
                     }
                 }
+                  while (right_theat.size() > 0) {
+                                    right_theat.remove(right_theat.size() - 1);
+                                }
             }
         });
         dataService.closeConnection();
     }
-    public Pane createMovie1(List<Theater> theat) {
+        @FXML
+        public void back() throws IOException {
+
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("Menu.fxml"));
+        Parent root = (Parent) fxmlLoader.load();
+        MenuController controller = fxmlLoader.<MenuController>getController();
+        fxmlLoader.setController(controller);
+        backpane.getChildren().setAll(root);
+    }
+    public Pane createMovie(List<Theater> theat) {
 
         Pane pane = new Pane();
         pane.minHeight(250);
@@ -166,21 +191,32 @@ public class TimetableController implements Initializable {
         imageView.setLayoutY(39);
         
         theater_index = 0;
+        int Y =0;
         int X = 0;
+       List<Button> temp = new ArrayList<Button>();
         for (Theater theater1 : theat) {
-
             theat_index.add(theater_index);
-            Button btn = new Button(theater1.getTime());
-            btn.setLayoutX(210 + X);
-            btn.setLayoutY(130);
-            pane.getChildren().add(btn);
+            if (X >= 280) {
+                X = 0;
+                Y += 45;
+            }
+   
+            temp.add(new Button(theater1.getTime()));
+            temp.get(temp.size() - 1).setLayoutX(210 + X);
+            temp.get(temp.size() - 1).setLayoutY(130 + Y);
+            pane.getChildren().add(temp.get(temp.size() - 1));
             if (theater1.getStatus().contains("SHOWING")) {
-                btn.setStyle("-fx-border-color:blue");
-                btn.setStyle("-fx-background-color:#00FF00");
-                btn.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                temp.get(temp.size() - 1).setStyle("-fx-border-color:blue");
+                temp.get(temp.size() - 1).setStyle("-fx-background-color:#00FF00");
+                temp.get(temp.size() - 1).setOnMouseClicked(new EventHandler<MouseEvent>() {
+
                     @Override
                     public void handle(MouseEvent event) {
-                        theater_index = theat_index.get(theater1.getId() - 1);
+                        for (Button button : temp) {
+                            if (button.getText().equals(theater1.getTime())) {
+                                theater_index = temp.indexOf(button);
+                            }
+                        }
                         theater_id = theater1.getTheater_id();
                         try {
                             jump();
@@ -190,25 +226,17 @@ public class TimetableController implements Initializable {
                     }
                 });
             } else if (theater1.getStatus().contains("DONE")) {
-                btn.setStyle("-fx-border-color:red");
-                btn.setStyle("-fx-background-color:gray");
+                temp.get(temp.size() - 1).setStyle("-fx-border-color:red");
+                temp.get(temp.size() - 1).setStyle("-fx-background-color:gray");
             }
+            
             theater_index++;
             X += 70;
         }
+  
         pane.getChildren().addAll(text, name, length, ratename, genre, language, time, imageView);
         return pane;
-    }
-    
-      @FXML
-    public void back() throws IOException {
-
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("Menu.fxml"));
-        Parent root = (Parent) fxmlLoader.load();
-        MenuController controller = fxmlLoader.<MenuController>getController();
-        fxmlLoader.setController(controller);
-        backpane.getChildren().setAll(root);
-    }
+    }   
     
     public Pane createPane(List<Theater> theat, int index) {
         Pane pane = new Pane();
@@ -273,7 +301,7 @@ public class TimetableController implements Initializable {
                     public void handle(MouseEvent event) {
                         for (Button button : temp) {
                             if (button.getText().equals(theater1.getTime())) {
-                                theater_index = temp.indexOf(button);
+                                theater_index = temp.indexOf(button)-1;
                             }
                         }
                         theater_id = theater1.getTheater_id();
@@ -291,6 +319,7 @@ public class TimetableController implements Initializable {
             theater_index++;
             X += 70;
         }
+      
         pane.getChildren().addAll(text, name, length, ratename, genre, language, imageView, time);
         return pane;
     }
