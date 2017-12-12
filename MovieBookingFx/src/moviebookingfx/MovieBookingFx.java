@@ -29,10 +29,7 @@ public class MovieBookingFx extends Application {
 
 
         Parent root = FXMLLoader.load(getClass().getResource("Timetable.fxml"));
-
-
-
-        primaryStage.setTitle("MOVIE");
+        primaryStage.setTitle("THEATER");
         primaryStage.setScene(new Scene(root, 1200, 800));
         primaryStage.show();
 

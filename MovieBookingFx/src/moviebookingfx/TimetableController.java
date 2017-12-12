@@ -68,10 +68,10 @@ public class TimetableController implements Initializable {
 
     @FXML
     private AnchorPane anchor_select;
-    
+
     @FXML
     private ComboBox searchbox;
-    
+
     @FXML
     private Button back;
 
@@ -80,10 +80,9 @@ public class TimetableController implements Initializable {
     int image_x;
     int image_y;
     int right_grid_y;
-   
-    
+
     DataService dataService = new DataService();
-    GridPane gridpane2 = new GridPane();
+  
     private List<Integer> theat_index = new ArrayList<Integer>();
     private List<Theater> theat = new ArrayList<Theater>();
     private List<Theater> right_theat = new ArrayList<Theater>();
@@ -97,7 +96,7 @@ public class TimetableController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         // TODO    
         //left pane
-        
+
         GridPane gridpane = new GridPane();
         gridpane.setStyle("-fx-border-color:blue");
         gridpane.setMinSize(570, 250);
@@ -105,134 +104,86 @@ public class TimetableController implements Initializable {
         gridpane.getColumnConstraints().add(new ColumnConstraints(570));
         scrollpane.setContent(gridpane);
 
-        
         for (int i = 1; i < 11; i++) {
             theat = dataService.getTheater(i);
             movies.add(createPane(theat, i - 1));
             gridpane.add(movies.get(i - 1), 0, i - 1);
-            System.out.println(i);
         }
 
 //         right pane
-        
+         GridPane gridpane2 = new GridPane();
         gridpane2.setStyle("-fx-border-color:blue");
         gridpane2.setMinSize(570, 250);
         gridpane2.setHgap(100);
         gridpane2.getColumnConstraints().add(new ColumnConstraints(570));
         selectpane.setContent(gridpane2);
-        
-//        AnchorPane movielistpane = new AnchorPane();
-//        gridpane2.add(movielistpane, 0, 0);
-         
-//        selectMovie = dataService.getAllMovie();
-//        String temp = "";
-//        image_x = 0;
-//        int count =0;
-//        for (int i = 0; i < selectMovie.size(); i++) {
-//            System.out.println("000000000000"+selectMovie.get(i).getName());
-//            System.out.println("11111111111"+selectMovie.get(i).getTheater());
-//            if ((!selectMovie.get(i).getName().equals(temp))&&(count !=0) || i==selectMovie.size()-1) {
-//                if(i == selectMovie.size()-1)
-//                    System.out.println("GG");
-//                movielistpane.getChildren().add(createMovie((i-count),count));
-//                image_x += 110;
-//                count =1;
-//                
-//            }
-//            else
-//            {
-//                count++;
-//            }
-//            System.out.println("22222222"+selectMovie.get(i).getName());
-//            temp = selectMovie.get(i).getName();
-//            
-//            
-//            
-//        }
         selectMovie = dataService.getAllMovie();
         searchbox.getItems().clear();
-       
-        for (Movie movie : selectMovie) {
-            if(!movie.getTheater().isEmpty())
-            {
-                System.out.println(movie.getTheater());
-                 searchbox.getItems().add(movie.getName() + "(" + movie.getLanguage() + ")");
-                 
-            }
-            else
-                System.out.println("EMPTY");
-           
-        }
-   
-         searchbox.valueProperty().addListener(new ChangeListener<String>() {
-                
-                @Override
-                    
-                public void changed(ObservableValue ov, String t, String t1) {
-                       while(gridpane2.getChildren().size() > 0){
-                         gridpane2.getChildren().remove(gridpane2.getChildren().size()-1);
-                 
-                    }
-    
-                    int index = 0;
-                    for (int i = 0; i < selectMovie.size(); i++) {
-                      
-                          if(searchbox.getValue().equals(selectMovie.get(i).getName()+ "(" + selectMovie.get(i).getLanguage() + ")"))
-                     {
-                         
-                         int temp =selectMovie.get(i).getTheater().get(0).getTheater_id();
-                         for (int j = 0; j < selectMovie.get(i).getTheater().size(); j++) {
-                             if(selectMovie.get(i).getTheater().get(j).getTheater_id()!=temp || j == selectMovie.get(i).getTheater().size()-1 )
-                             {
-                              
-                                 
-//                                 gridpane2.add(createMovie1(selectMovie.get(i).getTheater()), 0, index);
-                                  gridpane2.add(createMovie1(right_theat), 0, index);
-                                  while(right_theat.size()>0)
-                                  {
-                                  right_theat.remove(right_theat.size()-1);
-                                  }
-                                  System.out.println("removed"+right_theat);
-                          
-                                 index++;
-                             }
-                             else
-                             {
-                                right_theat.add(selectMovie.get(i).getTheater().get(j));
-                               
-                             }
-                         temp = selectMovie.get(i).getTheater().get(j).getTheater_id();
-                        }
-                     }
-                        
-                    }
-                   
-                    System.out.println(searchbox.getValue());   
-                }
-            });
 
-      
-        
-      
+        for (Movie movie : selectMovie) {
+            if (!movie.getTheater().isEmpty()) {     
+                int temp = movie.getTheater().get(0).getId();
+                searchbox.getItems().add(movie.getName() + "(" + movie.getLanguage() + ")");
+            } 
+          
+        }
+
+        searchbox.valueProperty().addListener(new ChangeListener<String>() {
+
+            @Override
+
+            public void changed(ObservableValue ov, String t, String t1) {
+                while (gridpane2.getChildren().size() > 0) {
+                    gridpane2.getChildren().remove(gridpane2.getChildren().size() - 1);
+
+                }
+
+                int index = 0;
+                for (int i = 0; i < selectMovie.size(); i++) {
+
+                    if (searchbox.getValue().equals(selectMovie.get(i).getName() + "(" + selectMovie.get(i).getLanguage() + ")")) {
+
+                        int temp = selectMovie.get(i).getTheater().get(0).getTheater_id();
+                        for (int j = 0; j < selectMovie.get(i).getTheater().size(); j++) {
+                            if (selectMovie.get(i).getTheater().get(j).getTheater_id() != temp || j == selectMovie.get(i).getTheater().size() - 1) {
+
+//                                 gridpane2.add(createMovie1(selectMovie.get(i).getTheater()), 0, index);
+                                gridpane2.add(createMovie1(right_theat), 0, index);
+                                while (right_theat.size() > 0) {
+                                    right_theat.remove(right_theat.size() - 1);
+                                }
+
+                                index++;
+                            } else {
+                                right_theat.add(selectMovie.get(i).getTheater().get(j));
+
+                            }
+                            temp = selectMovie.get(i).getTheater().get(j).getTheater_id();
+                        }
+                    }
+                }
+
+            }
+        });
+
         dataService.closeConnection();
 
     }
+
     //here
-    public Pane createMovie1(List<Theater> theat)
-    {
-        System.out.println("------------CREATEMOVIE---------------");
+    public Pane createMovie1(List<Theater> theat) {
+
         Pane pane = new Pane();
-        pane.minHeight(100);
+        pane.minHeight(250);
         pane.minWidth(570);
         pane.setStyle("-fx-border-color:red;");
         pane.setPadding(new Insets(8));
-        
-    
-//        Label text = new Label("THETHER " + (1) + "  SCREEN : " + theat.get(0).getScreen().getName());
-//        text.setLayoutX(30);
-//        text.setLayoutY(10);
 
-         Label name = new Label("NAME: "+searchbox.getValue() );
+        Label text = new Label("THETHER " + (theat.get(0).getTheater_id()) + "  SCREEN : " + theat.get(0).getScreen().getName());
+        text.setLayoutX(30);
+        text.setLayoutY(10);
+        
+        Label name = new Label("NAME: " + searchbox.getValue());
         name.setLayoutX(125);
         name.setLayoutY(40);
 
@@ -245,14 +196,14 @@ public class TimetableController implements Initializable {
         ratename.setLayoutY(100);
 
         Label genre = new Label("GENRE: " + theat.get(0).getMovie().getGenre());
-        genre.setLayoutX(300);
+        genre.setLayoutX(350);
         genre.setLayoutY(70);
 
         Label language = new Label("LANGUAGE: " + theat.get(0).getMovie().getLanguage());
-        language.setLayoutX(300);
+        language.setLayoutX(350);
         language.setLayoutY(40);
-        
-        Label time = new Label("TIME: " );
+
+        Label time = new Label("TIME: ");
         time.setLayoutX(125);
         time.setLayoutY(130);
 
@@ -260,12 +211,10 @@ public class TimetableController implements Initializable {
         ImageView imageView = new ImageView(image);
         imageView.setLayoutX(13);
         imageView.setLayoutY(39);
-        
-         theater_index = 0;
+
+        theater_index = 0;
         int X = 0;
         for (Theater theater1 : theat) {
-
-            System.out.println("theater1"+theater1);
 
             theat_index.add(theater_index);
 
@@ -273,19 +222,17 @@ public class TimetableController implements Initializable {
             btn.setLayoutX(210 + X);
             btn.setLayoutY(130);
             pane.getChildren().add(btn);
-           
-        
+
             if (theater1.getStatus().contains("SHOWING")) {
                 btn.setStyle("-fx-border-color:blue");
                 btn.setStyle("-fx-background-color:#00FF00");
-                System.out.println("SHOWING WORK");
+
                 btn.setOnMouseClicked(new EventHandler<MouseEvent>() {
 
                     @Override
                     public void handle(MouseEvent event) {
                         theater_index = theat_index.get(theater1.getId() - 1);
                         theater_id = theater1.getTheater_id();
-//                        System.out.println("theater1.getId() = " + theater_id);
 
 //                 jump to another class
                         try {
@@ -298,22 +245,19 @@ public class TimetableController implements Initializable {
             } else if (theater1.getStatus().contains("DONE")) {
                 btn.setStyle("-fx-border-color:red");
                 btn.setStyle("-fx-background-color:gray");
-                System.out.println("DONE WORK");
 
             }
 
-            System.out.println("theater_index = " + theater_index);
             theater_index++;
 
             X += 70;
-           
+
         }
-   
-        pane.getChildren().addAll(name,length,ratename,genre,language,time,imageView);
+
+        pane.getChildren().addAll(text,name, length, ratename, genre, language, time, imageView);
         return pane;
     }
 
- 
     public Pane createPane(List<Theater> theat, int index) {
         Pane pane = new Pane();
         pane.minHeight(100);
@@ -324,10 +268,6 @@ public class TimetableController implements Initializable {
         Label text = new Label("THETHER " + (index + 1) + "  SCREEN : " + theat.get(0).getScreen().getName());
         text.setLayoutX(30);
         text.setLayoutY(10);
-//        text.setStyle("-fx-font: 100px Tahoma");
-//        text.setStyle("-fx-fill: linear-gradient(from 0% 0% to 100% 200%, repeat, aqua 0%, red 50%)");
-//        text.setStyle("-fx-stroke: black");
-//        text.setStyle("-fx-stroke-width: 1");
 
         Label name = new Label("NAME: " + theat.get(0).getMovie().getName());
         name.setLayoutX(125);
@@ -348,8 +288,8 @@ public class TimetableController implements Initializable {
         Label language = new Label("LANGUAGE: " + theat.get(0).getMovie().getLanguage());
         language.setLayoutX(300);
         language.setLayoutY(40);
-        
-        Label time = new Label("TIME: " );
+
+        Label time = new Label("TIME: ");
         time.setLayoutX(125);
         time.setLayoutY(130);
 
@@ -360,29 +300,42 @@ public class TimetableController implements Initializable {
 
         theater_index = 0;
         int X = 0;
+        int Y = 0;
+        List<Button> temp = new ArrayList<Button>();
         for (Theater theater1 : theat) {
 
-            System.out.println(theater1);
-
             theat_index.add(theater_index);
-
-            Button btn = new Button(theater1.getTime());
-            btn.setLayoutX(210 + X);
-            btn.setLayoutY(130);
-            pane.getChildren().add(btn);
+            if(X >=280)
+            {
+                X = 0;
+                Y += 45;
+            }
+            temp.add( new Button(theater1.getTime()));
+            temp.get(temp.size()-1).setLayoutX(210+X);
+            temp.get(temp.size()-1).setLayoutY(130+Y);
+            pane.getChildren().add(temp.get(temp.size()-1));
+            
+//            Button btn = new Button(theater1.getTime());
+//            btn.setLayoutX(210 + X);
+//            btn.setLayoutY(130 + Y);
+//            pane.getChildren().add(btn);
+           
 
             if (theater1.getStatus().contains("SHOWING")) {
-                btn.setStyle("-fx-border-color:blue");
-                btn.setStyle("-fx-background-color:#00FF00");
-        
-                System.out.println("SHOWING WORK");
-                btn.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                temp.get(temp.size()-1).setStyle("-fx-border-color:blue");
+                temp.get(temp.size()-1).setStyle("-fx-background-color:#00FF00");
+                temp.get(temp.size()-1).setOnMouseClicked(new EventHandler<MouseEvent>() {
 
                     @Override
                     public void handle(MouseEvent event) {
-                        theater_index = theat_index.get(theater1.getId() - 1);
+                        for (Button button : temp) {
+                            if(button.getText().equals(theater1.getTime())){
+                              
+                                theater_index = temp.indexOf(button);
+                            }
+                        }
+//                        theater_index = theat_index.get(theater1.getId() - 1);
                         theater_id = theater1.getTheater_id();
-                        System.out.println("theater1.getId() = " + theater_id);
 
 //                 jump to another class
                         try {
@@ -393,19 +346,19 @@ public class TimetableController implements Initializable {
                     }
                 });
             } else if (theater1.getStatus().contains("DONE")) {
-                btn.setStyle("-fx-border-color:red");
-                btn.setStyle("-fx-background-color:gray");
-                System.out.println("DONE WORK");
+                
+                 temp.get(temp.size()-1).setStyle("-fx-border-color:red");
+                temp.get(temp.size()-1).setStyle("-fx-background-color:gray");
+                
 
             }
 
-            System.out.println("theater_index = " + theater_index);
             theater_index++;
 
             X += 70;
         }
-        System.out.println("-----------------");
-        pane.getChildren().addAll(text, name, length, ratename, genre, language, imageView,time);
+
+        pane.getChildren().addAll(text, name, length, ratename, genre, language, imageView, time);
 
         return pane;
     }
@@ -418,13 +371,21 @@ public class TimetableController implements Initializable {
         Parent root = (Parent) fxmlLoader.load();
 
         TheaterController controller = fxmlLoader.<TheaterController>getController();
-//        controller.setTheaterID(Integer.parseInt(id));
         controller.setTheaterID(theater_id, theater_index);
-//        controller.setting();
         fxmlLoader.setController(controller);
-
         backpane.getChildren().setAll(root);
 
-//            
+    }
+      @FXML
+    //cant take parametre in this method
+    public void back() throws IOException {
+
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("Menu.fxml"));
+        Parent root = (Parent) fxmlLoader.load();
+
+        MenuController controller = fxmlLoader.<MenuController>getController();
+        fxmlLoader.setController(controller);
+        backpane.getChildren().setAll(root);
+
     }
 }

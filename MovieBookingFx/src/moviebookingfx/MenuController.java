@@ -72,12 +72,12 @@ public class MenuController implements Initializable {
         });
     }
 
-   
+   @FXML
     public void jumpManage() throws IOException {
          FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("ManageMovie.fxml"));
         Parent root = (Parent) fxmlLoader.load();
 
-        TheaterController controller = fxmlLoader.<TheaterController>getController();
+        ManageMovieControlller controller = fxmlLoader.<ManageMovieControlller>getController();
 //        controller.setTheaterID(Integer.parseInt(id));
 
 //        controller.setting();
@@ -87,12 +87,12 @@ public class MenuController implements Initializable {
 //            
     }
 
-    
+    @FXML
     public void jumpTimetable() throws IOException {
       FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("Timetable.fxml"));
         Parent root = (Parent) fxmlLoader.load();
 
-        TheaterController controller = fxmlLoader.<TheaterController>getController();
+        TimetableController controller = fxmlLoader.<TimetableController>getController();
 //        controller.setTheaterID(Integer.parseInt(id));
 //        controller.setting();
         fxmlLoader.setController(controller);
@@ -106,5 +106,6 @@ public class MenuController implements Initializable {
 //        stage.show();
 //            
     }
+  
 
 }
