@@ -7,10 +7,7 @@
  * and open the template in the editor.
 
  */
-
 package moviebookingfx;
-
-
 
 import Class.*;
 
@@ -54,133 +51,90 @@ import javafx.scene.input.MouseEvent;
 
 import javafx.scene.layout.*;
 
-
-
 /**
-
  *
-
+ *
+ *
  * @author Sivakorn
-
+ *
  */
-
 public class ManageMovieControlller implements Initializable {
-
-
 
     @FXML
 
     private ScrollPane scrollpane;
 
-
-
     @FXML
 
     private AnchorPane showingpane;
-
-
 
     @FXML
 
     private AnchorPane manage;
 
-
-
     @FXML
 
     private ComboBox movieselector;
-
-
 
     @FXML
 
     private Label header;
 
-
-
     @FXML
 
     private ComboBox screenselector;
-
-
 
     @FXML
 
     private ComboBox sizeselect;
 
-
-
     @FXML
 
     private ScrollPane timepane;
-
-
 
     @FXML
 
     private AnchorPane moviemange;
 
-
-
     @FXML
 
     private ComboBox movieselector1;
-
-
 
     @FXML
 
     private TextField moviename;
 
-
-
     @FXML
 
     private TextField lenghth;
-
-
 
     @FXML
 
     private TextField releasedate;
 
-
-
     @FXML
 
     private TextField image;
-
-
 
     @FXML
 
     private TextField language;
 
-
-
     @FXML
 
     private TextField ratename;
-
-
 
     @FXML
 
     private Button mconfirmbtn;
 
-
-
     @FXML
 
     private Button mcancelbtn;
 
-
-
     @FXML
 
     private TextField genre;
-
-
 
     private List<Pane> cinema = new ArrayList<Pane>();
 
@@ -194,21 +148,14 @@ public class ManageMovieControlller implements Initializable {
 
     private String nowmovie = "New Movie";
 
-
-
     @Override
 
     public void initialize(URL url, ResourceBundle rb) {
 
         // TODO
-
         update();
 
-
-
     }
-
-
 
     public Pane createPane(List<Theater> theater) {
 
@@ -223,8 +170,6 @@ public class ManageMovieControlller implements Initializable {
         pane.setPadding(new Insets(8));
 
         Label movie_label = new Label(String.format("MOVIE : %-20s DURATION : %-20d LANGUAGE : %-20s\nGENRE: %-20s RATE: %-20s RELEASEDATE : %-20s", theater.get(0).getMovie().getName(), theater.get(0).getMovie().getLength(), theater.get(0).getMovie().getLanguage(), theater.get(0).getMovie().getGenre(), theater.get(0).getMovie().getRatename(), theater.get(0).getMovie().getReleaseDate()));
-
-
 
         Label theater_label = new Label(String.format("THEATER %2d %s", theater.get(0).getTheater_id(), theater.get(0).getScreen().getName()));
 
@@ -241,8 +186,6 @@ public class ManageMovieControlller implements Initializable {
         imageView.setLayoutX(13);
 
         imageView.setLayoutY(39);
-
-
 
         for (Theater theater1 : theater) {
 
@@ -282,8 +225,6 @@ public class ManageMovieControlller implements Initializable {
 
     }
 
-
-
     public void settingplan() {
 
         header.setText("THEATER : " + theater.get(theater_id).get(0).getTheater_id());
@@ -313,10 +254,7 @@ public class ManageMovieControlller implements Initializable {
         createtimepane();
 
         //timepane.getChildren().add(manage)
-
     }
-
-
 
     public void createtimepane() {
 
@@ -334,10 +272,7 @@ public class ManageMovieControlller implements Initializable {
 
         Button newtimebtn = new Button("NEW TIME");
 
-
-
         //cost += theater.getScreen().getPrice();
-
         for (Theater theater1 : theater.get(theater_id)) {
 
             Pane pane = new Pane();
@@ -372,8 +307,6 @@ public class ManageMovieControlller implements Initializable {
 
             text.setLayoutY(10);
 
-
-
             inputtime.add(text);
 
             Button statusbtn = new Button("STATUS");
@@ -405,8 +338,6 @@ public class ManageMovieControlller implements Initializable {
             pane.getChildren().addAll(label, text, status, statusbtn);
 
             timegrid.add(pane, 0, inputtime.size() - 1);
-
-
 
         }
 
@@ -468,8 +399,6 @@ public class ManageMovieControlller implements Initializable {
 
                             status.setText("STATUS : DONE");
 
-
-
                         } else {
 
                             status.setText("STATUS : SHOWING");
@@ -512,11 +441,7 @@ public class ManageMovieControlller implements Initializable {
 
         removebtn.setLayoutY(323);
 
-
-
         Button cancelbtn = new Button("CANCEL");
-
-
 
         cancelbtn.setOnMouseClicked(new EventHandler<MouseEvent>() {
 
@@ -534,10 +459,7 @@ public class ManageMovieControlller implements Initializable {
 
         cancelbtn.setLayoutY(400);
 
-
-
         //return timegrid;
-
         Button confirm = new Button("CONFIRM");
 
         confirm.setOnMouseClicked(new EventHandler<MouseEvent>() {
@@ -607,15 +529,12 @@ public class ManageMovieControlller implements Initializable {
                     if (i != 0) {
 
                         //_dataService.transactionBegin();
-
                         theater.get(theater_id).get(0).getScreen().removeTheater(theater.get(theater_id).get(i));
 
                         theater.get(theater_id).get(0).getMovie().removeTheater(theater.get(theater_id).get(i));
 
                         // theater.get(theater_id).get(i).getScreen().removeTheater(theater.get(theater_id).get(i));
-
                         //_dataService.transactionCommit();
-
                         for (List<Seats> seat : theater.get(theater_id).get(i).getSeats()) {
 
                             for (Seats seats : seat) {
@@ -626,8 +545,6 @@ public class ManageMovieControlller implements Initializable {
 
                         }
 
-
-
                         _dataService.remove(theater.get(theater_id).get(i).getId());
 
                     }
@@ -635,14 +552,11 @@ public class ManageMovieControlller implements Initializable {
                 }
 
                 //_dataService.transactionBegin();
-
                 _dataService.transactionCommit();
 
                 _dataService.transactionBegin();
 
                 for (int i = 0; i < inputtime.size(); i++) {
-
-
 
                     if (i < theater.get(theater_id).size()) {
 
@@ -665,8 +579,6 @@ public class ManageMovieControlller implements Initializable {
                         }
 
                         if (sizeselect.getValue() != null && !((sizeselect.getValue() + "").equals(theater.get(theater_id).get(i).getSize()))) {
-
-
 
                             theater.get(theater_id).get(i).setSize(sizeselect.getValue() + "");
 
@@ -698,8 +610,6 @@ public class ManageMovieControlller implements Initializable {
 
                         theater.get(theater_id).get(i).setTime(inputtime.get(i).getText());
 
-
-
                     } else {
 
                         if (label_status.get(i).getText().equals("STATUS : SHOWING")) {
@@ -710,11 +620,7 @@ public class ManageMovieControlller implements Initializable {
 
                             Theater newtheater = new Theater(stemp, mtemp, _dataService.getScreen(theater_id + 1), inputtime.get(i).getText(), theater_id + 1, "DONE");
 
-
-
                         }
-
-
 
                     }
 
@@ -736,11 +642,7 @@ public class ManageMovieControlller implements Initializable {
 
         timepane.setContent(timegrid);
 
-
-
     }
-
-
 
     public void settingmovie() {
 
@@ -754,25 +656,21 @@ public class ManageMovieControlller implements Initializable {
 
         }
 
-            movieselector1.getSelectionModel().selectFirst();
+        movieselector1.getSelectionModel().selectFirst();
 
-            movieselector1.valueProperty().addListener(new ChangeListener<String>() {
+        movieselector1.valueProperty().addListener(new ChangeListener<String>() {
 
-                @Override
+            @Override
 
-                public void changed(ObservableValue ov, String t, String t1) {
+            public void changed(ObservableValue ov, String t, String t1) {
 
-                    setmovie(t1);
+                setmovie(t1);
 
-                }
+            }
 
-            });
-
-
+        });
 
     }
-
-
 
     public void setmovie(String movietemp) {
 
@@ -820,8 +718,6 @@ public class ManageMovieControlller implements Initializable {
 
     }
 
-
-
     public Movie getmovie(String temp) {
 
         for (Movie movie1 : movie) {
@@ -837,8 +733,6 @@ public class ManageMovieControlller implements Initializable {
         return movie.get(0);
 
     }
-
-
 
     public void update() {
 
@@ -875,10 +769,7 @@ public class ManageMovieControlller implements Initializable {
         settingmovie();
 
         //_dataService.closeConnection();
-
     }
-
-
 
     public void enddayclear() {
 
@@ -887,7 +778,7 @@ public class ManageMovieControlller implements Initializable {
         for (List<Theater> list : theater) {
 
             for (Theater theater1 : list) {
-
+                theater1.setStatus("SHOWING");
                 for (List<Seats> seat : theater1.getSeats()) {
 
                     for (Seats seats : seat) {
@@ -905,8 +796,6 @@ public class ManageMovieControlller implements Initializable {
         _dataService.transactionCommit();
 
     }
-
-
 
     public void movieconfirm() {
 
@@ -956,25 +845,24 @@ public class ManageMovieControlller implements Initializable {
 
         }
 
-        nowmovie = (moviename.getText()+ "(" + language.getText()+ ")");
+        nowmovie = (moviename.getText() + "(" + language.getText() + ")");
 
         movie = _dataService.getAllMovie();
 
-        movieselector1.getItems().remove(movieselector1.getValue());
+        if (movieselector1.getValue().equals("New Movie")) {
+            movieselector1.getItems().add(nowmovie);
+            movieselector.getItems().add(nowmovie);
+        } else {
+            movieselector.getItems().remove(movieselector.getValue());
+            movieselector1.getItems().remove(movieselector1.getValue());
+            movieselector.getItems().add(nowmovie);
+            movieselector1.getItems().add(nowmovie);
+        }
 
-        movieselector1.getItems().add(nowmovie);
+        movieselector1.getSelectionModel().select(nowmovie);
 
-        if(movieselector1.getValue().equals("New Movie"))
-
-        movieselector1.getItems().add(nowmovie);
-
-        
-
-             movieselector1.getSelectionModel().select(nowmovie);
-
+// update();
     }
-
-
 
     public void moviecancel() {
 
@@ -1022,9 +910,7 @@ public class ManageMovieControlller implements Initializable {
 
     }
 
-    public void back(){
-
-        
+    public void back() {
 
     }
 

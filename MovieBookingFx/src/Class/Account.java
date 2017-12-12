@@ -20,21 +20,21 @@ public class Account {
     @Id
     @GeneratedValue
     private long id;
-    private int age;
     private String dateOfBirth;
     private String email;
     private int point;
     private String firstname;
     private String lastname;
     private String member = "Normal Member";
+    private String phonenumber;
 
-    Account(String dateOfBirth, String email, String firstname, String lastname) {
+    public Account(String dateOfBirth, String email, String firstname, String lastname,String phonenumber) {
         this.dateOfBirth = dateOfBirth;
         this.email = email;
         this.firstname = firstname;
         this.lastname = lastname;
         this.point = 0;
-        this.age = findAge();
+        this.phonenumber = phonenumber;
     }
     
     public void setToGoldMember(){
@@ -49,9 +49,30 @@ public class Account {
     public void setToNormalMember(){
         this.member = "Normal Member";
     }
-    
-    public int getAge() {
-        return age;
+   
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public String getMember() {
+        return member;
+    }
+
+    public void setMember(String member) {
+        this.member = member;
+    }
+
+    public String getPhonenumber() {
+        return phonenumber;
+    }
+
+    public void setPhonenumber(String phonenumber) {
+        this.phonenumber = phonenumber;
     }
 
     public String getDateOfBirth() {
@@ -74,10 +95,6 @@ public class Account {
         return lastname;
     }
 
-    public void setAge(int age) {
-        this.age = age;
-    }
-
     public void setDateOfBirth(String dateOfBirth) {
         this.dateOfBirth = dateOfBirth;
     }
@@ -98,45 +115,14 @@ public class Account {
         this.lastname = lastname;
     }
 
-    public void updateAge() {
-        this.age = findAge();
-    }
-
-    public int findAge() {
-        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
-        Date date = new Date();
-        String now = formatter.format(date);
-        String dayn = now.substring(0, 2);
-        String monthn = now.substring(3, 5);
-        String yearn = now.substring(6, 10);
-        int age;
-        int resultdayn = Integer.parseInt(dayn);
-        int resultmonthn = Integer.parseInt(monthn);
-        int resultyearn = Integer.parseInt(yearn) - 543;
-        String day = this.dateOfBirth.substring(0, 2);
-        String month = this.dateOfBirth.substring(3, 5);
-        String year = this.dateOfBirth.substring(6, 10);
-        int resultday = Integer.parseInt(day);
-        int resultmonth = Integer.parseInt(month);
-        int resultyear = Integer.parseInt(year);
-        int difday = resultdayn - resultday;
-        int difmonth = resultmonthn - resultmonth;
-        int difyear = resultyearn - resultyear;
-        if (difmonth < 0) {
-            age = difyear - 1;
-        } else {
-            if (difday < 0) {
-                age = difyear - 1;
-            } else {
-                age = difyear;
-            }
-        }
-        return age;
-    }
-
-    static class java {
-
-        public java() {
-        }
+    public int getDiscount(){
+        if(this.member.equals("Normal Member"))
+            return 0;
+        else if(this.member.equals("Gold Member"))
+            return 5;
+        else if(this.member.equals("Patinum Member"))
+            return 7;
+        else 
+            return 8;
     }
 }
