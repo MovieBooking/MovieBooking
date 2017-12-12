@@ -28,7 +28,7 @@ public class Account {
     private String member = "Normal Member";
     private String phonenumber;
 
-    public Account(String dateOfBirth, String email, String firstname, String lastname,String phonenumber) {
+    public Account(String dateOfBirth, String email, String firstname, String lastname, String phonenumber) {
         this.dateOfBirth = dateOfBirth;
         this.email = email;
         this.firstname = firstname;
@@ -36,20 +36,34 @@ public class Account {
         this.point = 0;
         this.phonenumber = phonenumber;
     }
-    
-    public void setToGoldMember(){
+
+    public void setToGoldMember() {
         this.member = "Gold Member";
     }
-    public void setToPatinumMember(){
+
+    public void setToPatinumMember() {
         this.member = "Patinum Member";
     }
-    public void setToDiamonMember(){
+
+    public void setToDiamonMember() {
         this.member = "Diamon Member";
     }
-    public void setToNormalMember(){
+
+    public void setToNormalMember() {
         this.member = "Normal Member";
     }
-   
+
+    public int getDiscount() {
+        if (this.member.equals("Normal Member")) {
+            return 0;
+        } else if (this.member.equals("Gold Member")) {
+            return 5;
+        } else if (this.member.equals("Patinum Member")) {
+            return 7;
+        } else {
+            return 8;
+        }
+    }
 
     public long getId() {
         return id;
@@ -115,14 +129,4 @@ public class Account {
         this.lastname = lastname;
     }
 
-    public int getDiscount(){
-        if(this.member.equals("Normal Member"))
-            return 0;
-        else if(this.member.equals("Gold Member"))
-            return 5;
-        else if(this.member.equals("Patinum Member"))
-            return 7;
-        else 
-            return 8;
-    }
 }

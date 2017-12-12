@@ -17,6 +17,7 @@ import javax.persistence.*;
  */
 @Entity
 public class Theater implements Serializable {
+
     private static final long serialVersionUID = 1L;
 
     @Id
@@ -29,28 +30,29 @@ public class Theater implements Serializable {
     private Screen screen;
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     private List<List<Seats>> seats;
-     @OneToOne(mappedBy = "theater", cascade = CascadeType.ALL,
+    @OneToOne(mappedBy = "theater", cascade = CascadeType.ALL,
             fetch = FetchType.EAGER, optional = false)
     private Movie movie;
     private String time;
     private String status;
     private String size;
-    
-    public Theater(String size,Movie movie,Screen screen, String time, int id, String status) {
+
+    public Theater(String size, Movie movie, Screen screen, String time, int id, String status) {
         this.seats = new ArrayList<List<Seats>>();
         this.theater_id = id;
         this.time = time;
         this.status = status;
         this.size = size;
-        if(size.equals("Large"))
+        if (size.equals("Large")) {
             this.createLargeTheater();
-        else if (size.equals("Medium"))
+        } else if (size.equals("Medium")) {
             this.createMediumTheater();
-        else
+        } else {
             this.createSmallTheater();
+        }
         movie.addTheater(this);
         screen.addTheater(this);
-        
+
     }
 
     public void createLargeTheater() {
@@ -132,17 +134,17 @@ public class Theater implements Serializable {
             seats.remove(seat);
             seat.setTheater(null);
         }
-         
+
     }
-    
-    public void removeAll(){
+
+    public void removeAll() {
         for (List<Seats> seat : seats) {
             System.out.println("a");
-           seats.remove(seat);
+            seats.remove(seat);
         }
-        
+
     }
-    
+
     public void setScreen(Screen screen) {
         this.screen = screen;
     }
@@ -191,11 +193,6 @@ public class Theater implements Serializable {
         this.time = time;
     }
 
-    @Override
-    public String toString() {
-        return "Theater{" + "id=" + id + ", theater_id=" + theater_id + ", screen=" + screen.toString() + ", time=" + time + ", status=" + status + '}';
-    }
-
     public String getSize() {
         return size;
     }
@@ -212,4 +209,8 @@ public class Theater implements Serializable {
         this.movie = movie;
     }
 
+    @Override
+    public String toString() {
+        return "Theater{" + "id=" + id + ", theater_id=" + theater_id + ", screen=" + screen.toString() + ", time=" + time + ", status=" + status + '}';
+    }
 }

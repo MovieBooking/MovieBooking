@@ -65,6 +65,17 @@ public class Screen implements Serializable {
         this.setPrice(100);
     }
 
+    public void addTheater(Theater theater) {
+        theater.setScreen(this);
+        this.theater.add(theater);
+
+    }
+
+    public void removeTheater(Theater theater) {
+        this.theater.remove(theater);
+        theater.setScreen(null);
+    }
+
     public int getPrice() {
         return price;
     }
@@ -106,16 +117,4 @@ public class Screen implements Serializable {
         this.theater = theater;
     }
 
-    public void addTheater(Theater theater) {
-        theater.setScreen(this);
-        this.theater.add(theater);
-
-    }
-
-    public void removeTheater(Theater theater) {
-        this.theater.remove(theater);
-        theater.setScreen(null);
-    }
-    
-    
 }
