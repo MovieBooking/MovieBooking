@@ -413,5 +413,9 @@ public class TheaterController implements Initializable {
             positionx = 10;
         }
     }
+
+    void Menu() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
     
 }

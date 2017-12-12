@@ -4,7 +4,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" fx:id="backpane" prefHeight="800.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="moviebookingfx.MenuController">
+<AnchorPane id="AnchorPane" fx:id="backpane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="moviebookingfx.MenuController">
    <children>
       <Button fx:id="Booking" layoutX="455.0" layoutY="209.0" mnemonicParsing="false" onMouseClicked="#jumpTimetable" style="-fx-background-color: #000000;" text="Booking" textAlignment="CENTER" textFill="WHITE">
          <font>
