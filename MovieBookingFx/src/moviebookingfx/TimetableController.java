@@ -301,7 +301,7 @@ public class TimetableController implements Initializable {
                     public void handle(MouseEvent event) {
                         for (Button button : temp) {
                             if (button.getText().equals(theater1.getTime())) {
-                                theater_index = temp.indexOf(button)-1;
+                                theater_index = temp.indexOf(button);
                             }
                         }
                         theater_id = theater1.getTheater_id();
