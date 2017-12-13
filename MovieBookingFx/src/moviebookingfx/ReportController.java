@@ -43,7 +43,7 @@ public class ReportController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         List<Report> report = _dataService.getAllReport();
-        System.out.println(report);
+        
         data = FXCollections.observableArrayList(report);
 
         
